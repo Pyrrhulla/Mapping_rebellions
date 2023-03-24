@@ -73,25 +73,22 @@ ui<-fluidPage(
                ".shiny-output-error { visibility: hidden; }",
                ".shiny-output-error:before { visibility: hidden; }"),
     useShinyjs(),
-    tags$head(tags$style(HTML("#plot_brushed_points tr.selected {background-color:red}"))),
     sidebarPanel(width = 3,
       h3("ANALYSING rebellions"),
       h4("Build your own graphs, tables, and statistics"),
       p("Download results"),
-      downloadButton('downloadPlot','Download Plot'),
-      actionButton("Download", "Download this table"), 
+      downloadButton('download_plot','Download Plot'),
+      actionButton("download_table", "Download this table"), 
       hr(),
       p("Filters"),
       fluidRow(
-        column(5,
-               radioButtons("dist", "Visualisation type:",
+        column(5, radioButtons("dist", "Visualisation type:",
                             c("Bubble" = "bubble_graph",
                               "Bar" = "bar_graph",
                               "Comparative Tables (reasons)" = "tables_reasons",
                               "Comparative Tables (participants)" = "tables_party",
                               "Pie" = "pie_graph"))),
-      column(5,
-               p(strong("Filters by Category")),
+      column(5, p(strong("Filters by Category")),
                fluidRow(uiOutput("filters_xyz"))),
                br()),
                hr(),
@@ -100,12 +97,10 @@ ui<-fluidPage(
                    bsCollapsePanel("Choose location", style = "danger",
                                    checkboxGroupInput(
                                      inputId = "choice_country",
-                                     
                                      label=h4("Country"),
                                      choices = c("Angola", "Argentina", "Belgium",  "Bolivia", "Brazil",  "Cape Verde", "Chile", "Colombia",  "Costa Rica", "Cuba", "Dominican Rep.", "Ecuador", "Guatemala", "Guinea-Bissau", "Italy", "India", "Japan", "Mexico", "Morocco", "Netherlands", "Nicaragua", "Panama", "Paraguay", "Peru", "Philippines", "Portugal", "Puerto Rico", "Spain", "Sri Lanka", "S. Tome&Prin.", "Uruguay","US-NMexico", "US-Louisiana", "Venezuela"),
                                      selected = c("Angola", "Argentina", "Belgium",  "Bolivia", "Brazil",  "Cape Verde", "Chile", "Colombia",  "Costa Rica", "Cuba", "Dominican Rep.", "Ecuador", "Guatemala", "Guinea-Bissau", "Italy", "India", "Japan", "Mexico", "Morocco", "Netherlands", "Nicaragua", "Panama", "Paraguay", "Peru", "Philippines", "Portugal", "Puerto Rico", "Spain", "Sri Lanka", "S. Tome&Prin.", "Uruguay","US-NMexico", "US-Louisiana", "Venezuela" 
                                      )
-                                     
                                    ))),
         bsCollapse(id = "collapse_2", open = "",
                    bsCollapsePanel("Choose the Reason", style = "warning",
@@ -113,16 +108,13 @@ ui<-fluidPage(
                                    checkboxGroupInput(inputId="reasons_plot",label="", 
                                                       choices=c(reasons),
                                                       selected = c(reasons)))),
-        
         bsCollapse(id = "collapse_3", open = "",
                    bsCollapsePanel("Choose the Participants", style = "success",
                                    actionButton("select_actors_plot","(Un)select All"),
                                    checkboxGroupInput(inputId="actors_plot",label="", 
                                                       choices=c(actors),
                                                       selected=c(actors))))),
-               
-               br()
-      ),
+                 br()),
 
       mainPanel(
       chooseSliderSkin("Flat", color = "#cc3429"),
@@ -132,40 +124,13 @@ ui<-fluidPage(
                             min=min(dataset$Year), max=max(dataset$Year),
                             value=c(min(dataset$Year),max(dataset$Year)), sep = "")),
       column(12, uiOutput("ui_component", height=600))))
-  
   )
 
 #####ui ends####
 server <- function(input, output, session) { 
   
-  ######selectors######
-  observe({
-    if(input$select_actors_plot == 0) return(NULL) 
-    else if (input$select_actors_plot%%2 == 0)
-    {
-      updateCheckboxGroupInput(session,"actors_plot","",choices=actors)
-    }
-    else
-    {
-      updateCheckboxGroupInput(session,"actors_plot","",choices=actors,selected=actors)
-    }
-  })
-  
-  observe({
-    if(input$select_reasons_plot == 0) return(NULL) 
-    else if (input$select_reasons_plot%%2 == 0)
-    {
-      updateCheckboxGroupInput(session,"reasons_plot","",choices=reasons)
-    }
-    else
-    {
-      updateCheckboxGroupInput(session,"reasons_plot", "",choices=reasons,selected=reasons)
-    }
-  })
-  
-  
-  
-  #######graphics#######
+
+  #######graphics data#######
   dsub_graph <- reactive({
     reasons_search <- paste0(c('xxx',input$reasons_plot),collapse = "|")
     reasons_search <- gsub(",","|",reasons_search)
@@ -508,11 +473,34 @@ server <- function(input, output, session) {
     as.character(input$Y_axis_Category_tables_party)
   })
   
+    ######selectors######
+  observe({
+    if(input$select_actors_plot == 0) return(NULL) 
+    else if (input$select_actors_plot%%2 == 0)
+    {
+      updateCheckboxGroupInput(session,"actors_plot","",choices=actors)
+    }
+    else
+    {
+      updateCheckboxGroupInput(session,"actors_plot","",choices=actors,selected=actors)
+    }
+  })
   
+  observe({
+    if(input$select_reasons_plot == 0) return(NULL) 
+    else if (input$select_reasons_plot%%2 == 0)
+    {
+      updateCheckboxGroupInput(session,"reasons_plot","",choices=reasons)
+    }
+    else
+    {
+      updateCheckboxGroupInput(session,"reasons_plot", "",choices=reasons,selected=reasons)
+    }
+  })
   
   ####modal function####
   myModal <- function() {
-    div(id = "Download",
+    div(id = "download_table",
         modalDialog(downloadButton("download_csv","Download as csv"),
                     downloadButton("download_xls","Download as Excel table"),
                     br(),
@@ -546,7 +534,7 @@ server <- function(input, output, session) {
   )
   
   
-  output$downloadPlot <- downloadHandler(
+  output$download_plot <- downloadHandler(
     filename = function(){
       paste('Graph', '.png', sep = '')
     },
