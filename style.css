@@ -1,8 +1,11 @@
-body {
-  margin: 0;
- position: relative;
- min-height:100vh;
-}
+ html {position: relative;
+       min-height: 100%;}
+           
+ body {margin-bottom: 160px;
+      font-family: Roboto, sans-serif;
+      line-height: 1.5;
+      color: dimgray;}
+
 
 
 #myCarousel
@@ -99,12 +102,6 @@ ul.menu li a:hover {
 }
 
 
-body {
-  font-family: Roboto, sans-serif;
-  font-size: 15px;
-  line-height: 1.5;
-  color: dimgray;
-}
 
 section {
   display: flex;
@@ -137,20 +134,16 @@ H1 {
   font-size: 20px;
 }
 
-.footer-dark {
+.footer-dark {position:absolute;
   text-align:center;
-  position: static;
-    width: 100%;
-    left: 0;
-    bottom: 0;
-    z-index: 1000;
-    background-color: rgba(0, 0, 0, .5);
-margin-bottom:-10%;
-padding-top:30px;
-padding-bottom:20px;
-  color:#f0f9ff;
-
-}
+  bottom:0;
+  width:100%;
+  margin-bottom:-10%;
+  padding-top:30px;
+  padding-bottom:20px;
+  background-color: #7f7f7f;
+  color:#f0f9ff;}
+  
 
 .footer-dark h3 {
   margin-top:0;

@@ -68,6 +68,10 @@ ui <- fluidPage(
                             uiOutput('revolt_data')))),
   fluidRow(tags$footer(HTML("
                     <!-- Footer -->
+                    <br>
+                    <br>
+                    <br>
+                    <br>
 <div class='footer-dark'>
             <div class='container'>
                 <div class='row'>
