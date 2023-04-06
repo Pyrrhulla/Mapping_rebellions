@@ -65,5 +65,5 @@ Author: Joe Cheng [aut],
 Maintainer: Carson Sievert <carson@rstudio.com>
 Repository: CRAN
 Date/Publication: 2021-05-12 06:00:02 UTC
-Built: R 4.0.5; x86_64-w64-mingw32; 2021-10-05 19:28:02 UTC; windows
-Archs: i386, x64
+Built: R 3.6.2; x86_64-apple-darwin15.6.0; 2021-05-13 06:29:28 UTC; unix
+Archs: sass.so.dSYM

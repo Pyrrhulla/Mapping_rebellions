@@ -12,67 +12,50 @@ library(shinythemes)
 library(leaflet)
 library(shinyWidgets)
 
+#data load
 Data <- read_delim("data_ency_new_new.csv", delim = ";", 
                    escape_double = FALSE, col_types = cols(Year = col_character()), 
                    trim_ws = TRUE)
-Data$Year<- gsub('.{6}$', '', Data$Year)
-Data$id <- seq.int(nrow(Data))
-Data$Year<-as.numeric(Data$Year)
-Data$Leaders<-Data$Leader
 
-Data$Latitude<-as.numeric(Data$Latitude)
-Data$Longitude<-as.numeric(Data$Longitude)
+#additional year setting
+Data$Year<- gsub('.{6}$', '', Data$Year)
+Data$Year<-as.numeric(Data$Year)
+
+#add id
+Data$id <- seq.int(nrow(Data))
+
+#setting numeric lat-long props
 Data$Longitude<- gsub('.{3}$', '', Data$Longitude)
 Data$Latitude<- gsub('.{3}$', '', Data$Latitude)
-
 Data$Latitude<-as.numeric(Data$Latitude)
 Data$Longitude<-as.numeric(Data$Longitude)
+
+#make dataset readable for the render in the main window
 dataset <- as.data.table(Data)
 
 
-#####ui#####
+####ui####
 ui <- fluidPage(
+  tags$link(rel = "stylesheet", type = "text/css", href = "style.css"),
   theme = shinytheme("cosmo"),
   sidebarLayout(position = "left", fluid = T,
                 sidebarPanel(width = 3, style = "overflow-y:scroll; height: 800px;  position:relative;",
                              fluidRow(h3("ENCYCLOPAEDIA of Rebellions"),
                                       h4("Read more about revolts and revolutions"),
+                                      p("Click on the box below to see the entire list of entries in chronological order. 
+                                        You can also type a location (e.g. Barcelona), or a year (e.g. 1638) or a category of event (e.g. uprising) 
+                                        to filter the appropriate results."),
                                       br()),
                              div(style = "max-height: 700px; position:relative;",
                                  fluidRow(
-                                   selectizeInput('data', "", unique(dataset$Revolt),multiple=F, selected = NULL, options = list(placeholder = "Type name of the revolt"))),
-                                 tags$head(
-                                   tags$style(HTML("
-         .shiny-output-error { visibility: hidden; },
-         .shiny-output-error:before { visibility: hidden; }
-     .item {
-     }
-     .selectize-dropdown-content .active {
-       background: #f6b784 !important;
-       color: white !important;
-     }
-.selectize-dropdown, .selectize-input { 
-  line-height: 50px !important;
-}
-.selectize-dropdown, .selectize-dropdown.form-control{
-    height: 90vh !important;
-}
-     .selectize-dropdown-content{
-    max-height: 100% !important;
-    height: 100% !important;
-  ")))
-                                 
-      )),
+                                   selectizeInput('data', "", unique(dataset$Revolt),multiple=F, selected = NULL, options = list(placeholder = "Type name of the revolt")))                             
+                                 )),
                 mainPanel(width = 9, 
                           fluidPage(
-                            uiOutput('revolt_data')))),
+                            uiOutput('Revolt1')
+                          ))),
   fluidRow(tags$footer(HTML("
-                    <!-- Footer -->
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-<div class='footer-dark'>
+           <div class='footer-dark'>
             <div class='container'>
                 <div class='row'>
                   <div class='col-6 col-md-4' >
@@ -83,7 +66,6 @@ ui <- fluidPage(
                             <li><a href='http://www.resistance.uevora.pt'>Contacts</a></li>
                         </ul>
                     </div>
-                  
                                   <div class='col-6 col-md-4'>
                                   <h3>Social Media</h3>
                                   <ul>
@@ -97,18 +79,22 @@ ui <- fluidPage(
                                   </div>
                                   </div>
                                   </div>
-                                  </div>
-                           </footer>"))))
+                                  </div>"))))
+
+#####ui ends####
 
 server <- function(input, output, session) { 
 
+#setting the reactive dataset  
   dsub <- reactive({
-    data_revolt <- paste0(c('xxx',input$data),collapse = "|")
-    data_revolt <- gsub(",", "|",data_revolt)
-    dataset[grepl(data_revolt,Revolt)]
+    DataSearch <- paste0(c('xxx',input$data),collapse = "|")
+    DataSearch <- gsub(",", "|",DataSearch)
+    dataset[grepl(DataSearch,Revolt)]
   })
   
-  output$revolt_data <- renderUI({
+
+  #render a main window with the data 
+  output$Revolt1 <- renderUI({
     tabItem(tabName = "Revolt%s",
             fluidPage(
               fluidRow(style='margin: 10px;',
@@ -140,10 +126,10 @@ server <- function(input, output, session) {
               h4("Further reading "),
               panel(renderText(dsub()$References)),
               panel(div(p(tags$b("Author:"), dsub()$Author)))
+                    )
             )
-    )
-  })
-  
+})
+
 }
 
 shinyApp(ui, server)

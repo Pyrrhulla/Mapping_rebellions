@@ -62,5 +62,5 @@ Author: Edzer Pebesma [aut, cre],
 Maintainer: Edzer Pebesma <edzer.pebesma@uni-muenster.de>
 Repository: CRAN
 Date/Publication: 2021-01-10 13:10:02 UTC
-Built: R 4.0.5; x86_64-w64-mingw32; 2021-07-13 07:13:57 UTC; windows
-Archs: i386, x64
+Built: R 3.6.2; x86_64-apple-darwin15.6.0; 2021-01-11 07:37:21 UTC; unix
+Archs: sp.so.dSYM

@@ -37,5 +37,5 @@ Author: Claus O. Wilke [aut, cre] (<https://orcid.org/0000-0002-7470-9261>),
 Maintainer: Claus O. Wilke <wilke@austin.utexas.edu>
 Repository: CRAN
 Date/Publication: 2021-07-13 04:50:13 UTC
-Built: R 4.0.5; x86_64-w64-mingw32; 2021-10-05 16:05:29 UTC; windows
-Archs: i386, x64
+Built: R 3.6.2; x86_64-apple-darwin15.6.0; 2021-07-14 18:50:21 UTC; unix
+Archs: isoband.so.dSYM

@@ -16,4 +16,4 @@ NeedsCompilation: no
 Packaged: 2016-06-05 22:08:00 UTC; gaborcsardi
 Repository: CRAN
 Date/Publication: 2016-06-06 06:39:52
-Built: R 4.0.2; ; 2020-07-06 23:49:26 UTC; windows
+Built: R 3.6.0; ; 2019-04-27 04:05:00 UTC; unix

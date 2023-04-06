@@ -49,8 +49,18 @@ URL: https://github.com/bhaskarvk/leaflet.extras,
         https://bhaskarvk.github.io/leaflet.extras/
 BugReports: https://github.com/bhaskarvk/leaflet.extras/issues
 RoxygenNote: 6.0.1
+RemoteType: github
+RemoteHost: api.github.com
+RemoteRepo: leaflet.extras
+RemoteUsername: bhaskarvk
+RemoteRef: master
+RemoteSha: 05c7e4f2cd1cf9ef586f875271cf03673c081e1d
+GithubRepo: leaflet.extras
+GithubUsername: bhaskarvk
+GithubRef: master
+GithubSHA1: 05c7e4f2cd1cf9ef586f875271cf03673c081e1d
 NeedsCompilation: no
-Packaged: 2018-04-21 16:06:46 UTC; barret
+Packaged: 2019-09-03 15:09:52 UTC; alex
 Author: Bhaskar Karambelkar [aut, cre],
   Barret Schloerke [aut],
   Bangyou Zheng [ctb] (Leaflet-search and Leaflet-GPS plugin integration),
@@ -81,6 +91,4 @@ Author: Bhaskar Karambelkar [aut, cre],
   Dale Harvey [ctb, cph] (pouchdb-browser library),
   Mike Bostock [ctb, cph] (topojson library)
 Maintainer: Bhaskar Karambelkar <bhaskarvk@gmail.com>
-Repository: CRAN
-Date/Publication: 2018-04-21 21:20:53 UTC
-Built: R 4.0.2; ; 2020-07-07 01:53:17 UTC; windows
+Built: R 3.6.1; ; 2019-09-03 15:09:54 UTC; unix

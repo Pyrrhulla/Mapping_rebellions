@@ -1,0 +1,12 @@
+name: encyclopedia
+title: encyclopedia
+username:
+account: alexandra-an
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 8102361
+bundleId: 6764415
+url: https://alexandra-an.shinyapps.io/encyclopedia/
+when: 1674488132.50932
+asMultiple: FALSE
+asStatic: FALSE

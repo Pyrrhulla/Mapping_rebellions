@@ -56,5 +56,5 @@ Author: Ross Ihaka [aut],
 Maintainer: Achim Zeileis <Achim.Zeileis@R-project.org>
 Repository: CRAN
 Date/Publication: 2021-06-24 07:00:06 UTC
-Built: R 4.0.5; x86_64-w64-mingw32; 2021-10-05 16:05:30 UTC; windows
-Archs: i386, x64
+Built: R 3.6.2; x86_64-apple-darwin15.6.0; 2021-06-25 06:40:42 UTC; unix
+Archs: colorspace.so.dSYM

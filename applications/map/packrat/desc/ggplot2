@@ -1,5 +1,5 @@
 Package: ggplot2
-Version: 3.3.5
+Version: 3.3.5.9000
 Title: Create Elegant Data Visualisations Using the Grammar of Graphics
 Description: A system for 'declaratively' creating graphics,
     based on "The Grammar of Graphics". You provide the data, tell 'ggplot2'
@@ -99,10 +99,21 @@ Collate: 'ggproto.r' 'ggplot-global.R' 'aaa-.r'
         'utilities-tidy-eval.R' 'zxx.r' 'zzz.r'
 VignetteBuilder: knitr
 RoxygenNote: 7.1.1
+Roxygen: list(markdown = TRUE)
 Encoding: UTF-8
 Config/Needs/website: ggtext, tidyr, forcats, tidyverse/tidytemplate
+RemoteType: github
+RemoteHost: api.github.com
+RemoteRepo: ggplot2
+RemoteUsername: hadley
+RemoteRef: HEAD
+RemoteSha: 759c63c2fd9e00ba3322c1b74b227f63c98d2e06
+GithubRepo: ggplot2
+GithubUsername: hadley
+GithubRef: HEAD
+GithubSHA1: 759c63c2fd9e00ba3322c1b74b227f63c98d2e06
 NeedsCompilation: no
-Packaged: 2021-06-24 12:25:35 UTC; thomas
+Packaged: 2021-10-26 17:16:41 UTC; alex
 Author: Hadley Wickham [aut] (<https://orcid.org/0000-0003-4757-117X>),
   Winston Chang [aut] (<https://orcid.org/0000-0002-1576-2126>),
   Lionel Henry [aut],
@@ -115,6 +126,4 @@ Author: Hadley Wickham [aut] (<https://orcid.org/0000-0003-4757-117X>),
   Dewey Dunnington [aut] (<https://orcid.org/0000-0002-9415-4582>),
   RStudio [cph, fnd]
 Maintainer: Thomas Lin Pedersen <thomas.pedersen@rstudio.com>
-Repository: CRAN
-Date/Publication: 2021-06-25 11:30:09 UTC
-Built: R 4.0.5; ; 2021-07-13 12:37:07 UTC; windows
+Built: R 3.6.1; ; 2021-10-26 17:16:44 UTC; unix

@@ -13,63 +13,59 @@ ui<-fluidPage(
       bsCollapse(id = "authors", 
                  bsCollapsePanel("Ana María Sixto Barcia (USC)", 
                                  p("Comuneros revolt 1520-1522"),
-                                 style = "default"),
+                                 style = "warning"),
                  bsCollapsePanel("Ana Paula Medicci (UFBA)", 
                                  p("Minas backcountry riots 1736"),
-                                 style = "warning"),
+                                 style = "default"),
                  bsCollapsePanel("Ana Sofia Ribeiro (UEvora)", 
                                  p("Land customs riot 1592"),
                                  p("Tehuecos rebellion 1597"),
                                  p("Stamped paper riot 1661"),
                                  p("Porto uprising 1757"),
-                                 style = "default"),
+                                 style = "warning"),
                  bsCollapsePanel("André Godinho (NOVA FCSH)", 
                                  p("Succession crisis riots in Coimbra 1580"),
                                  p("Succession crisis riots in Lisbon 1580"),
                                  p("Succession crisis riots in Santarém 1580"),
                                  p("Succession crisis riots in Setúbal 1580"),
-                                 style = "warning"),
+                                 style = "default"),
                  bsCollapsePanel("Andreia Fidalgo (ISCTE-IUL)", 
                                  p("Anti-French revolts in Algarve 1808"),
                                  p("Guerrilla of Remexido 1833-1838"),
-                                 style = "default"),
+                                 style = "warning"),
                  bsCollapsePanel("Ângela Barreto Xavier (ICS-UL)", 
                                  p("Cuncolim revolt 1583"),
-                                 style = "warning"),
+                                 style = "default"),
                  bsCollapsePanel("Arlindo Caldeira (NOVA FCSH)", 
                                  p("Rebellion of Amador 1595"),
-                                 style = "default"),
+                                 style = "warning"),
                  bsCollapsePanel("Arthur Curvelo (ICS-UL)", 
                                  p("Palmares resistance 1602-1694"),
                                  p("Mascate war 1710"),
-                                 style = "warning"),
+                                 style = "default"),
                  bsCollapsePanel("Benita Herreros (UC)", 
                                  p("Huarochiri uprising 1750"),
-                                 style = "default"),
+                                 style = "warning"),
                  bsCollapsePanel("Blanca Llanes Parra (UC)", 
                                  p("Oropesa riot in Madrid 1699"),
-                                 style = "warning"),
+                                 style = "default"),
                  bsCollapsePanel("Camilo Fernández Cortizo (USC)", 
                                  p("Seri-Salineros rebellion 1645"),
                                  p("Tarahumara rebellions 1646-1697"),
                                  p("Tehuantepec rebellion 1660-1661"),
                                  p("Galicia uprising 1846"),
-                                 style = "default"),
+                                 style = "warning"),
                  bsCollapsePanel("Candela De Luca (UNLP)", 
                                  p("Sucre riots 1769"),
                                  p("Ingaguasi riot 1775"),
                                  p("Pocoatas uprising 1775"),
                                  p("Chayanta rebellion 1780-1781"),
                                  p("Tupak Katari rebellion 1781"),
-                                 style = "warning"),
+                                 style = "default"),
                  bsCollapsePanel("Daniel Malet Calvo (ISCTE-IUL)", 
                                  p("Acaxee rebellion 1591-1604"),
                                  p("Guachichiles rebellion 1599"),
                                  p("Mapuche rebellion 1723"),
-                                 style = "default"),
-                 bsCollapsePanel("Arthur Curvelo (ICS-UL)", 
-                                 p("Mascate war 1710"),
-                                 p("Palmares resistance 1602-1694"),
                                  style = "warning"),
                  bsCollapsePanel("David A. Abián Cubillo (UC)", 
                                  p("Aranjuez riot 1808"),
@@ -157,9 +153,6 @@ ui<-fluidPage(
                                  p("Guarapiche River rebellion 1669"),
                                  p("Enslaved Amerindians uprisings in S. Paulo 1652"),
                                  p("Indigenous uprising of Engenho de Santana 1602"),
-                                 p("French conspiracy 1795"),
-                                 p("Interethnic rebellion 1669"),
-                                 p("Mestizo rebellion against military recruitment 1661"),
                                  p("Second Calchaqui War 1630-1643"),
                                  p("Seven Nations rebellion 1644"),
                                  p("Third Calchaqui War 1658-1667"),
@@ -174,6 +167,7 @@ ui<-fluidPage(
                                  p("Galleys riot in Barcelona 1629"),
                                  p("Barcelona tax riot 1634"),
                                  p("Anti-conscription riots in Barcelona 1636"),
+                                 p("Catalan revolt 1640"),
                                  p("Barcelona riots 1640"),
                                  p("Girona riots 1640"),
                                  p("Mataró riots 1640"),
@@ -413,8 +407,9 @@ ui<-fluidPage(
       bsCollapsePanel("Alexandra Anokhina (MPI LHLT)", 
                       p("Programming, deisign and deployment of the web-site and applications"),
                       style = "default"))),
+  br(),
+  br(),
   fluidRow(tags$footer(HTML("
-                    <!-- Footer -->
 <div class='footer-dark'>
             <div class='container'>
                 <div class='row'>
@@ -436,21 +431,12 @@ ui<-fluidPage(
                                   <li><a href='https://www.youtube.com/c/ProjectoRESISTANCE'>YouTube</a></li>
                                   </ul>
                                   </div>
-                                  
-                                  
-                                  
                                   <div class='col-6 col-md-4'>
-                                  
                                   <a href='https://www.lhlt.mpg.de/en' class='image' style='color = white;'><img src='img/mpifullwhite.png', style='color = white; margin-top: -15px; margin-bottom: -5px; padding-right:-5px; padding-top:5px; padding-bottom: -40px', height = 40></a>
-
                                   </div>
                                   </div>
                                   </div>
-                                  </div>
-
-
-                           </footer>
-                           <!-- Footer -->"))))      
+                                  </div>"))))      
 
 
 server <- function(input, output, session) { 

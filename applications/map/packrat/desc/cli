@@ -33,5 +33,5 @@ Author: Gábor Csárdi [aut, cre],
 Maintainer: Gábor Csárdi <csardi.gabor@gmail.com>
 Repository: CRAN
 Date/Publication: 2021-07-17 09:00:01 UTC
-Built: R 4.0.5; x86_64-w64-mingw32; 2021-07-19 08:15:41 UTC; windows
-Archs: i386, x64
+Built: R 3.6.2; x86_64-apple-darwin15.6.0; 2021-07-18 06:53:13 UTC; unix
+Archs: cli.so.dSYM

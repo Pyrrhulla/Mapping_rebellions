@@ -42,5 +42,5 @@ Author: Thomas Lin Pedersen [cre, aut]
   Romain François [aut] (<https://orcid.org/0000-0002-2444-4226>)
 Repository: CRAN
 Date/Publication: 2021-02-28 19:30:02 UTC
-Built: R 4.0.5; x86_64-w64-mingw32; 2021-10-05 16:05:29 UTC; windows
-Archs: i386, x64
+Built: R 3.6.2; x86_64-apple-darwin15.6.0; 2021-03-01 12:56:26 UTC; unix
+Archs: farver.so.dSYM

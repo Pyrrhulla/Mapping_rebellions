@@ -1,6 +1,6 @@
 Package: nlme
-Version: 3.1-148
-Date: 2020-05-13
+Version: 3.1-142
+Date: 2019-11-07
 Priority: recommended
 Title: Linear and Nonlinear Mixed Effects Models
 Authors@R: c(person("José", "Pinheiro", role = "aut", comment = "S version"),
@@ -12,7 +12,6 @@ Authors@R: c(person("José", "Pinheiro", role = "aut", comment = "S version"),
              person("Bert", "Van Willigen",role = "ctb", comment = "Programmer fixed sigma"),
 	     person("R-core", email = "R-core@R-project.org",
                     role = c("aut", "cre")))
-Contact: see 'MailingList'
 Description: Fit and compare Gaussian linear and nonlinear mixed-effects models.
 Depends: R (>= 3.4.0)
 Imports: graphics, stats, utils, lattice
@@ -22,10 +21,9 @@ ByteCompile: yes
 Encoding: UTF-8
 License: GPL (>= 2) | file LICENCE
 BugReports: https://bugs.r-project.org
-MailingList: R-help@r-project.org
 URL: https://svn.r-project.org/R-packages/trunk/nlme
 NeedsCompilation: yes
-Packaged: 2020-05-13 08:42:56 UTC; maechler
+Packaged: 2019-11-07 08:42:14 UTC; maechler
 Author: José Pinheiro [aut] (S version),
   Douglas Bates [aut] (up to 2007),
   Saikat DebRoy [ctb] (up to 2002),
@@ -36,6 +34,6 @@ Author: José Pinheiro [aut] (S version),
   R-core [aut, cre]
 Maintainer: R-core <R-core@R-project.org>
 Repository: CRAN
-Date/Publication: 2020-05-24 00:40:02 UTC
-Built: R 4.0.2; x86_64-w64-mingw32; 2020-06-22 08:50:13 UTC; windows
-Archs: i386, x64
+Date/Publication: 2019-11-07 18:40:02 UTC
+Built: R 3.6.0; x86_64-apple-darwin15.6.0; 2019-11-08 19:44:49 UTC; unix
+Archs: nlme.so.dSYM

@@ -37,5 +37,4 @@ Author: Joe Cheng [aut],
 Maintainer: Carson Sievert <carson@rstudio.com>
 Repository: CRAN
 Date/Publication: 2021-08-25 13:50:02 UTC
-Built: R 4.0.5; x86_64-w64-mingw32; 2021-10-05 19:25:18 UTC; windows
-Archs: i386, x64
+Built: R 3.6.1; x86_64-apple-darwin15.6.0; 2021-12-08 21:56:50 UTC; unix

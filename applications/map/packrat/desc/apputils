@@ -29,8 +29,8 @@ GithubUsername: leonawicz
 GithubRef: master
 GithubSHA1: 08779d993b4ee4de9dd0fa54addc2d8fd75d7ae2
 NeedsCompilation: no
-Packaged: 2020-07-09 17:49:22 UTC; aanne
+Packaged: 2020-07-04 17:33:52 UTC; alex
 Author: Matthew Leonawicz [aut, cre],
   Scenarios Network for Alaska and Arctic Planning [cph, fnd]
 Maintainer: Matthew Leonawicz <mfleonawicz@alaska.edu>
-Built: R 4.0.2; ; 2020-07-09 17:49:23 UTC; windows
+Built: R 3.6.1; ; 2020-07-04 17:33:53 UTC; unix

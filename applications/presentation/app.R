@@ -2,11 +2,10 @@ library(shiny)
 library(shinyBS)
 library(shinythemes)
 
-
-
+######ui####
 ui<-fluidPage(
-  theme = shinytheme("cosmo"),
   tags$link(rel = "stylesheet", type = "text/css", href = "style.css"),
+  theme = shinytheme("cosmo"),
   sidebarLayout(
     tags$div(
       class = "sticky",
@@ -14,6 +13,8 @@ ui<-fluidPage(
                           border-color: transparent !important",
                    fluidRow(style = "background-color: transparent !important;
                border-color: transparent !important",
+                            
+                            #setting toc menu
                             column(
                               width = 12,
                               tags$div(
@@ -21,34 +22,28 @@ ui<-fluidPage(
                                 tags$h3(
                                   class = "toc_title",
                                   "Content"
-                                ),
+                                        ),
                                 tags$ul(
                                   class = "toc_list",
                                   tags$li(
                                     tags$a(
                                       href = "#scope",
                                       "Scope and goals"
-                                    ),
-                                  ),
+                                          )),
                                   tags$li(
                                     tags$a(
                                       href = "#method",
                                       "Methodology and criteria"
-                                    )
-                                  ),
+                                          )),
                                   tags$li(
                                     tags$a(
                                       href = "#tech",
                                       "Technical and programming details"
-                                    )
-                                  )
+                                    ))))
                                 )
-                              )
-                            )
                    )
       )
     ),
-    
     mainPanel(
       h2("Presentation"),
       h3("Scope and goals", id = "scope"),
@@ -69,24 +64,24 @@ ui<-fluidPage(
       p("So far, we have identified 500+ events that meet the criteria mentioned above, of which about half are already fully described in our database. As this is an ongoing project, new entries are regularly added to the database and made available online."),
       br(),
       h3("Technical and programming details", id = "tech"),
-      p("The project consists of the applications and the web-site. The main languages of the applications are R and JavaScript. The applications are deployed using the shiny server. The completed code is available on the GitHub page of the project."),
+      p("The project consists of the applications and the web-site. The infrastructure and all the applications were created in R/JavaScriptfrom scratch. The code of the projects and the documentation are available on the", a("GitHub page", href = "https://github.com/SCC-projects/Mapping_rebellions", style = "font-size: 15px"),
+        "of the research group."),
       br(),
       br()
-     )),
+    )),
   fluidRow(tags$footer(HTML("
+                    <footer>
 <div class='footer-dark'>
             <div class='container'>
                 <div class='row'>
                   <div class='col-6 col-md-4' >
                         <a href='http://www.resistance.uevora.pt' class='image'><img src='img/resistancelogo_m.png', style='margin-top: -17px; margin-bottom: -13px; padding-right:5px; padding-top:5px; padding-bottom: -30px', height = 40></a>
-                        
                     </div>
                         <div class='col-6 col-md-4'>
                         <ul>
                             <li><a href='http://www.resistance.uevora.pt'>Contacts</a></li>
                         </ul>
                     </div>
-                  
                                   <div class='col-6 col-md-4'>
                                   <h3>Social Media</h3>
                                   <ul>
@@ -95,22 +90,16 @@ ui<-fluidPage(
                                   <li><a href='https://www.youtube.com/c/ProjectoRESISTANCE'>YouTube</a></li>
                                   </ul>
                                   </div>
-                                  
-                                  
-                                  
                                   <div class='col-6 col-md-4'>
-                                  
                                   <a href='https://www.lhlt.mpg.de/en' class='image' style='color = white;'><img src='img/mpifullwhite.png', style='color = white; margin-top: -15px; margin-bottom: -5px; padding-right:-5px; padding-top:5px; padding-bottom: -40px', height = 40></a>
-
                                   </div>
                                   </div>
                                   </div>
                                   </div>
+                           </footer>"))))      
 
 
-                           </footer>
-                           "))))      
-
+######ui ends######
 
 server <- function(input, output, session) { 
 }

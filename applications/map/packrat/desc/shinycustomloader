@@ -15,4 +15,4 @@ NeedsCompilation: no
 Packaged: 2018-03-26 21:35:50 UTC; emi
 Repository: CRAN
 Date/Publication: 2018-03-27 18:35:48 UTC
-Built: R 4.0.5; ; 2021-10-05 16:48:30 UTC; windows
+Built: R 3.6.0; ; 2019-04-27 03:33:38 UTC; unix

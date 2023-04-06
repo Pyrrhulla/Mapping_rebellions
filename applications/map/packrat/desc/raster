@@ -1,13 +1,14 @@
 Package: raster
 Type: Package
 Title: Geographic Data Analysis and Modeling
-Version: 3.3-7
-Date: 2020-06-27
-Depends: sp (>= 1.4.1), R (>= 3.5.0)
-Suggests: rgdal (>= 1.5-8), rgeos (>= 0.3-8), ncdf4, igraph, tcltk,
-        parallel, rasterVis, MASS, sf, testthat, gstat, fields
+Version: 3.5-15
+Date: 2022-01-22
+Imports: Rcpp, methods, terra (>= 1.5-12)
 LinkingTo: Rcpp
-Imports: Rcpp, methods
+Depends: sp (>= 1.4-5), R (>= 3.5.0)
+Suggests: rgdal (>= 1.5-23), rgeos (>= 0.5-3), ncdf4, igraph, tcltk,
+        parallel, rasterVis, MASS, sf, tinytest, gstat, fields,
+        exactextractr
 SystemRequirements: C++11
 Description: Reading, writing, manipulating, analyzing and modeling of spatial data. The package implements basic and high-level functions for raster data and for vector data operations such as intersections. See the manual and tutorials on <https://rspatial.org/> to get started.
 License: GPL (>= 3)
@@ -25,6 +26,7 @@ Authors@R: c(
 	person("Roger", "Bivand", role = "ctb"),
 	person("Lorenzo", "Busetto", role = "ctb"),
 	person("Mort", "Canty", role = "ctb"),
+	person("Ben", "Fasoli", role = "ctb"),
 	person("David", "Forrest", role = "ctb"),
 	person("Aniruddha", "Ghosh", role = "ctb"),
 	person("Duncan", "Golicher", role = "ctb"),
@@ -32,10 +34,12 @@ Authors@R: c(
 	person("Jonathan A.", "Greenberg", role = "ctb"),
 	person("Paul", "Hiemstra", role = "ctb"),
 	person("Kassel", "Hingee", role = "ctb"),
+	person("Alex", "Ilich", role = "ctb"),
 	person("Institute for Mathematics Applied Geosciences", role="cph"),
 	person("Charles", "Karney", role = "ctb"),
 	person("Matteo", "Mattiuzzi", role = "ctb"),
 	person("Steven", "Mosher", role = "ctb"),
+	person("Babak", "Naimi", role = "ctb"),	
 	person("Jakub", "Nowosad", role = "ctb"),
 	person("Edzer", "Pebesma", role = "ctb"),
 	person("Oscar", "Perpinan Lamigueiro", role = "ctb"),
@@ -46,7 +50,7 @@ Authors@R: c(
 	person("Rafael", "Wueest", role = "ctb")
 	)
 NeedsCompilation: yes
-Packaged: 2020-06-27 07:35:52 UTC; rhijm
+Packaged: 2022-01-22 18:13:14 UTC; rhijm
 Author: Robert J. Hijmans [cre, aut] (<https://orcid.org/0000-0001-5872-2872>),
   Jacob van Etten [ctb],
   Michael Sumner [ctb],
@@ -56,6 +60,7 @@ Author: Robert J. Hijmans [cre, aut] (<https://orcid.org/0000-0001-5872-2872>),
   Roger Bivand [ctb],
   Lorenzo Busetto [ctb],
   Mort Canty [ctb],
+  Ben Fasoli [ctb],
   David Forrest [ctb],
   Aniruddha Ghosh [ctb],
   Duncan Golicher [ctb],
@@ -63,10 +68,12 @@ Author: Robert J. Hijmans [cre, aut] (<https://orcid.org/0000-0001-5872-2872>),
   Jonathan A. Greenberg [ctb],
   Paul Hiemstra [ctb],
   Kassel Hingee [ctb],
+  Alex Ilich [ctb],
   Institute for Mathematics Applied Geosciences [cph],
   Charles Karney [ctb],
   Matteo Mattiuzzi [ctb],
   Steven Mosher [ctb],
+  Babak Naimi [ctb],
   Jakub Nowosad [ctb],
   Edzer Pebesma [ctb],
   Oscar Perpinan Lamigueiro [ctb],
@@ -77,6 +84,6 @@ Author: Robert J. Hijmans [cre, aut] (<https://orcid.org/0000-0001-5872-2872>),
   Rafael Wueest [ctb]
 Maintainer: Robert J. Hijmans <r.hijmans@gmail.com>
 Repository: CRAN
-Date/Publication: 2020-06-27 14:20:03 UTC
-Built: R 4.0.2; x86_64-w64-mingw32; 2020-07-06 20:00:12 UTC; windows
-Archs: i386, x64
+Date/Publication: 2022-01-22 23:02:41 UTC
+Built: R 3.6.2; x86_64-apple-darwin15.6.0; 2022-01-24 10:16:13 UTC; unix
+Archs: raster.so.dSYM

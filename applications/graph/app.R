@@ -17,26 +17,27 @@ library(shinyWidgets)
 library(readr)
 library(shinycustomloader)
 
-css <- "
-.nowrap {
-  white-space: nowrap;
-}"
 
-###data###
-dataset <- read_delim("data.csv", 
+dataset1 <- read_delim("data_ency_new_new.csv", 
                        ";", escape_double = FALSE, col_types = cols(Latitude = col_number(), 
                                                                     Longitude = col_number(), Year = col_number()), 
                        trim_ws = TRUE)
 
-df_reasons_all <- read_delim("df_reasons.csv", 
+df_reasons_all <- read_delim("df_reasons_all_new_new.csv", 
                              delim = ";", escape_double = FALSE, col_types = cols(Year = col_number(), 
                                                                                   freq = col_number(), id = col_number()), 
                              trim_ws = TRUE)
 
-df_party_all <- read_delim("df_party.csv", 
+df_party_all <- read_delim("df_party_all_new_new.csv", 
                            delim = ";", escape_double = FALSE, col_types = cols(Year = col_number(), 
                                                                                 freq = col_number()), trim_ws = TRUE)
 
+dataset_graph <- read_delim("data_ency_new_new.csv", 
+                            ";", escape_double = FALSE, col_types = cols(Latitude = col_number(), 
+                                                                         Longitude = col_number(), Year = col_number()), 
+                            trim_ws = TRUE)
+
+####dataset setting####
 
 df_reasons_all<-as.data.frame(df_reasons_all)
 df_reasons_all<-as.data.table(df_reasons_all)
@@ -44,99 +45,183 @@ df_reasons_all<-as.data.table(df_reasons_all)
 df_party_all<-as.data.frame(df_party_all)
 df_party_all<-as.data.table(df_party_all)
 
-dataset <- data.table(dataset)
-Latitude <- c(dataset$Latitude)
-Longitude <- c(dataset$Longitude)
-Synopsis <-c(dataset$Synopsis)
-Start <-c(dataset$`Date/ start`)
-End <-(dataset$`Date/ end`)
-Reasons <-(dataset$Reasons)
-Revolt <- (dataset$Revolt)
-Year <-(dataset$Year)
-Country <- (dataset$Country)
-Continent <- (dataset$Continent)
-Monarchy <- (dataset$Monarchy)
-revolts <-dataset$Revolt
-
+dataset1 <- data.table(dataset1)
+loc <- unique(dataset1$Revolt)
+Location <- c(dataset1$Revolt)
+Latitude <- c(dataset1$Latitude)
+Longitude <- c(dataset1$Longitude)
+Synopsis <-c(dataset1$Synopsis)
+Start <-c(dataset1$`Date/ start`)
+End <-(dataset1$`Date/ end`)
+Reasons <-(dataset1$Reasons)
+Revolt <- (dataset1$Revolt)
+Year <-(dataset1$Year)
+Country <- (dataset1$Country)
+Continent <- (dataset1$Continent)
+Monarchy <- (dataset1$Monarchy)
+DF <- data.frame(Location,Latitude,Longitude,Start, End, Monarchy,Reasons)
+revolts <-dataset1$Revolt
 DFgraph <- data.frame(Year, Revolt, Monarchy, Country,Continent)
 
 
 reasons <- c("Anti-colonial", "Anti-seigneurial", "Economic reforms", "Fiscal", "Food", "Freedom", "Labour Conditions", "Natural resources", "Political", "Religion", "Rebel Maroon communities", "Resistance to foreign occupation", "Others", "Multiple")
 actors <- c("Africans",  "Artisans",  "Clergymen", "Enslaved", "Indigenous", "Local elites", "Maroons", "Peasants", "Settlers/Colonists", "Soldiers", "Women", "Workers", "Others",  "Undifferentiated", 'Muncipal Council / Cabildo')
+countries <-c("Angola", "Argentina", "Belgium",  "Bolivia", "Brazil",  "Cape Verde", "Chile", "Colombia",  "Costa Rica", "Cuba", "Dominican Rep.", "Ecuador", "Guatemala", "Guinea-Bissau", "Italy", "India", "Japan", "Mexico", "Morocco", "Netherlands", "Nicaragua", "Panama", "Paraguay", "Peru", "Philippines", "Portugal", "Puerto Rico", "Spain", "Sri Lanka", "S. Tome&Prin.", "Uruguay","US-NMexico", "US-Louisiana", "Venezuela")
 
-
-####ui#####
+####ui####
 ui<-fluidPage(
   theme = shinytheme("cosmo"),
+  tags$link(rel = "stylesheet", type = "text/css", href = "style.css"),
   fluidRow(
     tags$style(type="text/css",
                ".shiny-output-error { visibility: hidden; }",
                ".shiny-output-error:before { visibility: hidden; }"),
     useShinyjs(),
+    tags$head(tags$style(HTML("#plot_brushed_points tr.selected {background-color:red}"))),
     sidebarPanel(width = 3,
       h3("ANALYSING rebellions"),
       h4("Build your own graphs, tables, and statistics"),
       p("Download results"),
-      downloadButton('download_plot','Download Plot'),
-      actionButton("download_table", "Download this table"), 
+      downloadButton('downloadPlot','Download Plot'),
+      actionButton("Download", "Download this table"), 
       hr(),
       p("Filters"),
       fluidRow(
-        column(5, radioButtons("dist", "Visualisation type:",
+        column(5,
+               radioButtons("dist", "Visualisation type:",
                             c("Bubble" = "bubble_graph",
                               "Bar" = "bar_graph",
                               "Comparative Tables (reasons)" = "tables_reasons",
                               "Comparative Tables (participants)" = "tables_party",
                               "Pie" = "pie_graph"))),
-      column(5, p(strong("Filters by Category")),
+      column(5,
+               p(strong("Filters by Category")),
                fluidRow(uiOutput("filters_xyz"))),
                br()),
                hr(),
       fluidRow(
-        bsCollapse(id = "collapse_1", open = "Choose the Monarchy",
+        
+        bsCollapse(id = "collapse_location", open = "",
                    bsCollapsePanel("Choose location", style = "danger",
+                                   actionButton("select_monarchy_plot","(Un)select All"),
                                    checkboxGroupInput(
                                      inputId = "choice_country",
-                                     label=h4("Country"),
-                                     choices = c("Angola", "Argentina", "Belgium",  "Bolivia", "Brazil",  "Cape Verde", "Chile", "Colombia",  "Costa Rica", "Cuba", "Dominican Rep.", "Ecuador", "Guatemala", "Guinea-Bissau", "Italy", "India", "Japan", "Mexico", "Morocco", "Netherlands", "Nicaragua", "Panama", "Paraguay", "Peru", "Philippines", "Portugal", "Puerto Rico", "Spain", "Sri Lanka", "S. Tome&Prin.", "Uruguay","US-NMexico", "US-Louisiana", "Venezuela"),
-                                     selected = c("Angola", "Argentina", "Belgium",  "Bolivia", "Brazil",  "Cape Verde", "Chile", "Colombia",  "Costa Rica", "Cuba", "Dominican Rep.", "Ecuador", "Guatemala", "Guinea-Bissau", "Italy", "India", "Japan", "Mexico", "Morocco", "Netherlands", "Nicaragua", "Panama", "Paraguay", "Peru", "Philippines", "Portugal", "Puerto Rico", "Spain", "Sri Lanka", "S. Tome&Prin.", "Uruguay","US-NMexico", "US-Louisiana", "Venezuela" 
-                                     )
-                                   ))),
-        bsCollapse(id = "collapse_2", open = "",
+                                     label="",
+                                     choices = c(countries),
+                                     selected = c(countries)))),
+        bsCollapse(id = "collapse_reasons", open = "",
                    bsCollapsePanel("Choose the Reason", style = "warning",
                                    actionButton("select_reasons_plot","(Un)select All"),
-                                   checkboxGroupInput(inputId="reasons_plot",label="", 
+                                   checkboxGroupInput(inputId="reasons_plot",
+                                                      label="", 
                                                       choices=c(reasons),
                                                       selected = c(reasons)))),
-        bsCollapse(id = "collapse_3", open = "",
+        bsCollapse(id = "collapse_actors", open = "",
                    bsCollapsePanel("Choose the Participants", style = "success",
                                    actionButton("select_actors_plot","(Un)select All"),
-                                   checkboxGroupInput(inputId="actors_plot",label="", 
+                                   checkboxGroupInput(inputId="actors_plot",
+                                                      label="", 
                                                       choices=c(actors),
                                                       selected=c(actors))))),
-                 br()),
-
-      mainPanel(
+               
+               br()
+      ),
+    # Show the selected plot
+    mainPanel(
       chooseSliderSkin("Flat", color = "#cc3429"),
       fluidRow(sliderInput( width = '300%', 
                             inputId = "graph_slider", 
                             label=h4("Choose time period"),
-                            min=min(dataset$Year), max=max(dataset$Year),
-                            value=c(min(dataset$Year),max(dataset$Year)), sep = "")),
-      column(12, uiOutput("ui_component", height=600))))
-  )
+                            min=min(dataset1$Year), max=max(dataset1$Year),
+                            value=c(min(dataset1$Year),max(dataset1$Year)), sep = "")),
+      column(12, uiOutput("ui_component", height=600))
+      
+    )
+  ),
+  fluidRow(tags$footer(HTML("
+           <div class='footer-dark'>
+            <div class='container'>
+                <div class='row'>
+                  <div class='col-6 col-md-4' >
+                        <a href='http://www.resistance.uevora.pt' class='image'><img src='img/resistancelogo_m.png', style='margin-top: -17px; margin-bottom: -13px; padding-right:5px; padding-top:5px; padding-bottom: -30px', height = 40></a>
+                        
+                    </div>
+                        <div class='col-6 col-md-4'>
+                        <ul>
+                            <li><a href='http://www.resistance.uevora.pt'>Contacts</a></li>
+                        </ul>
+                    </div>
+                  
+                                  <div class='col-6 col-md-4'>
+                                  <h3>Social Media</h3>
+                                  <ul>
+                                  <li><a href='http://www.resistance.uevora.pt/#'>Web-Site</a></li>
+                                  <li><a href='https://twitter.com/R_esiste'>Twitter</a></li>
+                                  <li><a href='https://www.youtube.com/c/ProjectoRESISTANCE'>YouTube</a></li>
+                                  </ul>
+                                  </div>
+                                  <div class='col-6 col-md-4'>
+                                  
+                                  <a href='https://www.lhlt.mpg.de/en' class='image' style='color = white;'><img src='img/mpifullwhite.png', style='color = white; margin-top: -15px; margin-bottom: -5px; padding-right:-5px; padding-top:5px; padding-bottom: -40px', height = 40></a>
 
-#####ui ends####
-server <- function(input, output, session) { 
+                                  </div>
+                                  </div>
+                                  </div>
+                                  </div>")))
   
+)
 
-  #######graphics data#######
+
+
+
+server <- function(input, output, session) { 
+  ###########selectors##########
+  observe({
+    if(input$select_actors_plot == 0) return(NULL) 
+    else if (input$select_actors_plot%%2 == 0)
+    {
+      updateCheckboxGroupInput(session,"actors_plot","",choices=actors)
+    }
+    else
+    {
+      updateCheckboxGroupInput(session,"actors_plot","",choices=actors,selected=actors)
+    }
+  })
+  
+  observe({
+    if(input$select_reasons_plot == 0) return(NULL) 
+    else if (input$select_reasons_plot%%2 == 0)
+    {
+      updateCheckboxGroupInput(session,"reasons_plot","",choices=reasons)
+    }
+    else
+    {
+      updateCheckboxGroupInput(session,"reasons_plot", "",choices=reasons,selected=reasons)
+    }
+  })
+  
+  observe({
+    if(input$select_monarchy_plot == 0) return(NULL) 
+    else if (input$select_monarchy_plot%%2 == 0)
+    {
+      updateCheckboxGroupInput(session,"choice_country","",choices=countries)
+    }
+    else
+    {
+      updateCheckboxGroupInput(session,"choice_country", "",choices=countries,selected=countries)
+    }
+  })
+  
+  
+  #######graphics#######
   dsub_graph <- reactive({
+    country_search <- paste0(c('xxx',input$choice_country),collapse = "|")
+    country_search <- gsub(",","|",country_search)
     reasons_search <- paste0(c('xxx',input$reasons_plot),collapse = "|")
     reasons_search <- gsub(",","|",reasons_search)
     actors_search <- paste0(c('xxx',input$actors_plot),collapse = "|")
     actors_search <- gsub(",","|",actors_search)
-    dataset[dataset$Year >= input$graph_slider[1] & dataset$Year <= input$graph_slider[2] & grepl(reasons_search,Reasons) & grepl(actors_search,Participants )]
+    dataset1[dataset1$Year >= input$graph_slider[1] & dataset1$Year <= input$graph_slider[2] & grepl(country_search,Country) & grepl(reasons_search,Reasons) & grepl(actors_search,Participants )]
     
   })
   
@@ -172,6 +257,8 @@ server <- function(input, output, session) {
     pie
   })
   
+  
+  
   tables_reasons<- reactive({
     tables_reasons <- ggplot(reasons_graph(), aes_string(x = input$X_axis_Category_tables_reasons, y = input$Y_axis_Category_tables_reasons)) +
       geom_bar(aes_string(fill= input$Y_axis_Category_tables_reasons), position = position_stack(reverse = TRUE), stat='identity') +
@@ -193,7 +280,6 @@ server <- function(input, output, session) {
   })
   
   #####means bubble######
-  
   observe({
     if (input$dist == "bubble_graph") {
       output$filters_xyz<-renderUI({
@@ -224,9 +310,8 @@ server <- function(input, output, session) {
     as.character(input$Y_axis_Category_bubble)
   })
   
-  
-  #########graph + table render#######
-  
+
+  #########graph functions#######
   observe({
     if (input$dist == "bubble_graph") {
       output$ui_component <- renderUI({
@@ -234,7 +319,7 @@ server <- function(input, output, session) {
           fluidPage(
             fluidRow(
               plotOutput('plotui', brush=brushOpts("plot_brush",resetOnNew=T)),
-              column(12,brushOpts("plot_brush",resetOnNew=T)),
+
               column(12,DT::dataTableOutput("plot_brushed_points"))
             )))
       })
@@ -249,9 +334,7 @@ server <- function(input, output, session) {
                            options = list(
                              autoWidth = TRUE,
                              scroller = TRUE,
-                             dom = 'Bfrtip')
-        )
-        print (subset_res)
+                             dom = 'Bfrtip'))
       }, filter = 'top')
     }else if(input$dist == "bar_graph") {
       output$ui_component <- renderUI({
@@ -259,7 +342,7 @@ server <- function(input, output, session) {
           fluidPage(
             fluidRow(
               plotOutput('plotui', brush=brushOpts("plot_brush",resetOnNew=T)),
-              column(12,brushOpts("plot_brush",resetOnNew=T)),
+
               column(12,DT::dataTableOutput("plot_brushed_points"))
             )))
       })
@@ -274,9 +357,7 @@ server <- function(input, output, session) {
                            options = list(
                              autoWidth = TRUE,
                              scroller = TRUE,
-                             dom = 'Bfrtip')
-        )
-        print (subset_res)
+                             dom = 'Bfrtip'))
       }, filter = 'top')
       
     }else if (input$dist == "pie_graph") {
@@ -295,7 +376,7 @@ server <- function(input, output, session) {
           fluidPage(
             fluidRow(
               column(12, plotOutput('plotui', height = 1000, width = 800)),
-              column(12,brushOpts("plot_brush",resetOnNew=T)),
+
               column(12,DT::dataTableOutput("plot_brushed_points"))
             )))
       })
@@ -310,9 +391,7 @@ server <- function(input, output, session) {
                            options = list(
                              autoWidth = TRUE,
                              scroller = TRUE,
-                             dom = 'Bfrtip')
-        )
-        print (subset_res)
+                             dom = 'Bfrtip'))
       }, filter = 'top')
       
     }else if (input$dist == 'tables_party') {
@@ -321,7 +400,7 @@ server <- function(input, output, session) {
           fluidPage(
             fluidRow(
               column(12, plotOutput('plotui', brush=brushOpts("plot_brush",resetOnNew=T), height = 1000, width = 800)),
-              column(12,brushOpts("plot_brush",resetOnNew=T)),
+
               column(12,DT::dataTableOutput("plot_brushed_points"))
             )))
       })
@@ -336,31 +415,71 @@ server <- function(input, output, session) {
                            options = list(
                              autoWidth = TRUE,
                              scroller = TRUE,
-                             dom = 'Bfrtip')
-        )
-        print (subset_res)
+                             dom = 'Bfrtip'))
       }, filter = 'top')
-    }else if (input$dist == 'reasons_graph') {
-      output$ui_component <- renderUI({
-        renderD3tree3({d3tree3(map_reasons())})
-      })
     }
-    else if (input$dist == 'party_graph') {
-      output$ui_component <- renderUI({
-        renderD3tree3({d3tree3(map_party())})
-      })
-    }
-    else if (input$dist == 'country_party_graph') {
-      output$ui_component <- renderUI({
-        renderD3tree3({d3tree3(map_party_country())})
-      })
-    }
-    else if (input$dist == 'country_reason_graph') {
-      output$ui_component <- renderUI({
-        renderD3tree3({d3tree3(map_reasons_country())})
-      })
-    }
+
   })
+  
+  
+  
+  myModal <- function() {
+    div(id = "Download",
+        modalDialog(downloadButton("download_csv","Download as csv"),
+                    downloadButton("download_xls","Download as Excel table"),
+                    br(),
+                    br(),
+                    easyClose = TRUE, title = "Download Table")
+    )
+  }
+  
+  observeEvent(input$Download, {
+    showModal(myModal())
+  })
+  output$download_csv <- downloadHandler(
+    filename = function() {
+      "brushed_data.csv"
+    },
+    content = function(filename) {
+      write_csv2(res, filename, append = F)    }
+  )
+  
+  
+  output$download_xls <- downloadHandler(
+    filename = function() {
+      "brushed_data.xls"
+    },
+    content = function(filename) {
+      if (input$dist == "bubble_graph") {
+        write_excel_csv2(res, filename, append = F)
+      }
+      else{return}
+    }
+  )
+  
+  
+  output$downloadPlot <- downloadHandler(
+    filename = function(){
+      paste('Graph', '.png', sep = '')
+    },
+    content = function(file){
+      if (input$dist == "bubble_graph") {
+        ggsave(file, plot = bubble(), width = 10, height = 8, dpi = 150, device = 'png')
+      }else if (input$dist == "bar_graph"){
+        ggsave(file, plot = bar(), width = 10, height = 8, dpi = 150, device = 'png')
+      }
+      else if(input$dist == "pie_graph"){
+        ggsave(file, plot = pie(), width = 10, height = 8, dpi = 150, device = 'png')
+      }
+      else if(input$dist == 'tables_reasons'){
+        ggsave(file, plot = tables_reasons()(), width = 10, height = 8, dpi = 150, device = 'png')
+      }
+      else{return}
+    }
+  )
+  
+  
+  
   
   #####means tables_reasons######
   observe({
@@ -472,89 +591,9 @@ server <- function(input, output, session) {
   y_var_party<-reactive({
     as.character(input$Y_axis_Category_tables_party)
   })
-  
-    ######selectors######
-  observe({
-    if(input$select_actors_plot == 0) return(NULL) 
-    else if (input$select_actors_plot%%2 == 0)
-    {
-      updateCheckboxGroupInput(session,"actors_plot","",choices=actors)
-    }
-    else
-    {
-      updateCheckboxGroupInput(session,"actors_plot","",choices=actors,selected=actors)
-    }
-  })
-  
-  observe({
-    if(input$select_reasons_plot == 0) return(NULL) 
-    else if (input$select_reasons_plot%%2 == 0)
-    {
-      updateCheckboxGroupInput(session,"reasons_plot","",choices=reasons)
-    }
-    else
-    {
-      updateCheckboxGroupInput(session,"reasons_plot", "",choices=reasons,selected=reasons)
-    }
-  })
-  
-  ####modal function####
-  myModal <- function() {
-    div(id = "download_table",
-        modalDialog(downloadButton("download_csv","Download as csv"),
-                    downloadButton("download_xls","Download as Excel table"),
-                    br(),
-                    br(),
-                    easyClose = TRUE, title = "Download Table")
-    )
-  }
-  
-  observeEvent(input$Download, {
-    showModal(myModal())
-  })
-  output$download_csv <- downloadHandler(
-    filename = function() {
-      "brushed_data.csv"
-    },
-    content = function(filename) {
-      write_csv2(res, filename, append = F)    }
-  )
+#######end xyz########
   
   
-  output$download_xls <- downloadHandler(
-    filename = function() {
-      "brushed_data.xls"
-    },
-    content = function(filename) {
-      if (input$dist == "bubble_graph") {
-        write_excel_csv2(res, filename, append = F)
-      }
-      else{return}
-    }
-  )
   
-  
-  output$download_plot <- downloadHandler(
-    filename = function(){
-      paste('Graph', '.png', sep = '')
-    },
-    content = function(file){
-      if (input$dist == "bubble_graph") {
-        ggsave(file, plot = bubble(), width = 10, height = 8, dpi = 150, device = 'png')
-      }else if (input$dist == "bar_graph"){
-        ggsave(file, plot = bar(), width = 10, height = 8, dpi = 150, device = 'png')
-      }
-      else if(input$dist == "pie_graph"){
-        ggsave(file, plot = pie(), width = 10, height = 8, dpi = 150, device = 'png')
-      }
-      else if(input$dist == 'tables_reasons'){
-        ggsave(file, plot = tables_reasons()(), width = 10, height = 8, dpi = 150, device = 'png')
-      }
-      else{return}
-    }
-  )
-  
-  #######server########
-
 } 
 shinyApp(ui, server)

@@ -142,4 +142,4 @@ Author: JJ Allaire [aut],
   Albert Krewinkel [ctb, cph] (pagebreak Lua filter)
 Repository: CRAN
 Date/Publication: 2021-09-14 14:10:02 UTC
-Built: R 4.0.5; ; 2022-02-08 02:40:03 UTC; windows
+Built: R 3.6.2; ; 2021-09-15 07:47:30 UTC; unix

@@ -2,7 +2,7 @@ Package: openssl
 Type: Package
 Title: Toolkit for Encryption, Signatures and Certificates Based on
         OpenSSL
-Version: 1.4.2
+Version: 1.4.6
 Authors@R: c(person("Jeroen", "Ooms", role = c("aut", "cre"), email = "jeroen@berkeley.edu",
     comment = c(ORCID = "0000-0002-4035-0289")),
     person("Oliver", "Keyes", role = "ctb"))
@@ -16,7 +16,7 @@ Description: Bindings to OpenSSL libssl and libcrypto, plus custom SSH key parse
     number generator, and 'bignum' math methods for manually performing crypto 
     calculations on large multibyte integers.
 License: MIT + file LICENSE
-URL: https://github.com/jeroen/openssl#readme
+URL: https://github.com/jeroen/openssl
 BugReports: https://github.com/jeroen/openssl/issues
 SystemRequirements: OpenSSL >= 1.0.1
 VignetteBuilder: knitr
@@ -26,11 +26,11 @@ Suggests: testthat (>= 2.1.0), digest, knitr, rmarkdown, jsonlite,
 RoxygenNote: 7.1.1
 Encoding: UTF-8
 NeedsCompilation: yes
-Packaged: 2020-06-27 13:18:44 UTC; jeroen
+Packaged: 2021-12-18 13:12:46 UTC; jeroen
 Author: Jeroen Ooms [aut, cre] (<https://orcid.org/0000-0002-4035-0289>),
   Oliver Keyes [ctb]
 Maintainer: Jeroen Ooms <jeroen@berkeley.edu>
 Repository: CRAN
-Date/Publication: 2020-06-27 15:00:02 UTC
-Built: R 4.0.2; x86_64-w64-mingw32; 2020-07-06 21:32:26 UTC; windows
-Archs: i386, x64
+Date/Publication: 2021-12-19 03:30:02 UTC
+Built: R 3.6.2; x86_64-apple-darwin15.6.0; 2021-12-19 06:15:03 UTC; unix
+Archs: openssl.so.dSYM
