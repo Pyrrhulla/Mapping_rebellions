@@ -13,7 +13,7 @@ library(leaflet)
 library(shinyWidgets)
 
 #data load
-Data <- read_delim("data_ency_new_new.csv", delim = ";", 
+Data <- read_delim("data.csv", delim = ";", 
                    escape_double = FALSE, col_types = cols(Year = col_character()), 
                    trim_ws = TRUE)
 
@@ -30,7 +30,6 @@ Data$Latitude<- gsub('.{3}$', '', Data$Latitude)
 Data$Latitude<-as.numeric(Data$Latitude)
 Data$Longitude<-as.numeric(Data$Longitude)
 
-#make dataset readable for the render in the main window
 dataset <- as.data.table(Data)
 
 
@@ -49,23 +48,32 @@ ui <- fluidPage(
                              div(style = "max-height: 700px; position:relative;",
                                  fluidRow(
                                    selectizeInput('data', "", unique(dataset$Revolt),multiple=F, selected = NULL, options = list(placeholder = "Type name of the revolt")))                             
-                                 )),
+                             )),
                 mainPanel(width = 9, 
                           fluidPage(
-                            uiOutput('Revolt1')
+                            uiOutput('Revolt')
                           ))),
   fluidRow(tags$footer(HTML("
            <div class='footer-dark'>
             <div class='container'>
                 <div class='row'>
                   <div class='col-6 col-md-4' >
-                        <a href='http://www.resistance.uevora.pt' class='image'><img src='img/resistancelogo_m.png', style='margin-top: -17px; margin-bottom: -13px; padding-right:5px; padding-top:5px; padding-bottom: -30px', height = 40></a>
+                  <ul>
+                        <li><a href='http://www.resistance.uevora.pt' class='image'><img src='img/resistancelogo_m.png', height = 30></a></li>
+                        <li><a href='https://www.en.cidehus.uevora.pt' class='image'><img src='img/CIDEHUS.png' style = 'padding-top: 10px', height = 40></a></li>
+                        <li><a href='https://www.iscte-iul.pt' class='image'><img src='img/ISCTE-IUL.png', style = 'padding-top: 10px', height = 40></a></li>
+                        <li><a href='https://www.lhlt.mpg.de/en' class='image'><img src='img/mpifullwhite.png', height = 30></a></li>
+                        <li>2019. This work is licensed under a CC BY 4.0 license</li>
+
+                    </ul>
                     </div>
                         <div class='col-6 col-md-4'>
                         <ul>
                             <li><a href='http://www.resistance.uevora.pt'>Contacts</a></li>
-                        </ul>
-                    </div>
+                             <li><a href=''>Legal Information</a></li>
+                              <li><a href=''>Licence</a></li>
+                                </ul>
+                                  </div>
                                   <div class='col-6 col-md-4'>
                                   <h3>Social Media</h3>
                                   <ul>
@@ -74,28 +82,26 @@ ui <- fluidPage(
                                   <li><a href='https://www.youtube.com/c/ProjectoRESISTANCE'>YouTube</a></li>
                                   </ul>
                                   </div>
-                                  <div class='col-6 col-md-4'>
-                                  <a href='https://www.lhlt.mpg.de/en' class='image' style='color = white;'><img src='img/mpifullwhite.png', style='color = white; margin-top: -15px; margin-bottom: -5px; padding-right:-5px; padding-top:5px; padding-bottom: -40px', height = 40></a>
-                                  </div>
                                   </div>
                                   </div>
                                   </div>"))))
 
+
 #####ui ends####
 
 server <- function(input, output, session) { 
-
-#setting the reactive dataset  
+  
+  #setting the reactive dataset  
   dsub <- reactive({
-    DataSearch <- paste0(c('xxx',input$data),collapse = "|")
+    DataSearch <- paste(input$data, collapse = "|")
     DataSearch <- gsub(",", "|",DataSearch)
     dataset[grepl(DataSearch,Revolt)]
   })
   
-
+  
   #render a main window with the data 
-  output$Revolt1 <- renderUI({
-    tabItem(tabName = "Revolt%s",
+  output$Revolt <- renderUI({
+    tabItem(tabName = "",
             fluidPage(
               fluidRow(style='margin: 10px;',
                        box(                  
@@ -122,14 +128,19 @@ server <- function(input, output, session) {
                       tags$b("Main participants:"), dsub()$Participants, em(".", .noWS = c("before")),
                       tags$b("Number of participants:"), dsub()$`Number of participants`, em(".", .noWS = c("before")),
                       tags$b("Main reasons & motivations:"), dsub()$Reasons, em(".", .noWS = c("before")),
-                      tags$b("Leadership:"), dsub()$Leaders, em(".", .noWS = c("before"))))),
+                      tags$b("Leadership:"), dsub()$Leader, em(".", .noWS = c("before")),
+                      tags$b("Relevance:"), dsub()$Relevance, em(".", .noWS = c("before"))))),
               h4("Further reading "),
               panel(renderText(dsub()$References)),
-              panel(div(p(tags$b("Author:"), dsub()$Author)))
-                    )
+              panel(div(p(tags$b("Author:"), dsub()$Author))),
+              h4("Recommended citation for Encyclopaedia entries (example):"),
+              panel(div(p('Herreros, Benita (2023). "Huarochiri uprising 1750", in J. V. Serrão and M. S. Cunha (coord), 
+                          Rebellions in the Early Modern Iberian World.  <https://mappingrebellions.com/encyclopaedia.html>')))
+              
             )
-})
-
+    )
+  })
+  
 }
 
 shinyApp(ui, server)

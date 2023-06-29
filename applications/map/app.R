@@ -15,7 +15,7 @@ library(shinyWidgets)
 library(shinycustomloader)
 library(shinyalert)
 
-Data <- read_delim("data_ency_new_new.csv", delim = ";", 
+Data <- read_delim("data.csv", delim = ";", 
                    escape_double = FALSE, col_types = cols(Year = col_character()), 
                    trim_ws = TRUE)
 
@@ -40,21 +40,21 @@ IconSet <- awesomeIconList(
 )
 
 
-dataset1 <- data.table(Data)
-loc <- unique(dataset1$Revolt)
-Location <- c(dataset1$Revolt)
-Latitude <- c(dataset1$Latitude)
-Longitude <- c(dataset1$Longitude)
-Synopsis <-c(dataset1$Synopsis)
-Start <-c(dataset1$`Date/ start`)
-End <-(dataset1$`Date/ end`)
-Reasons <-(dataset1$Reasons)
-Revolt <- (dataset1$Revolt)
-Year <-(dataset1$Year)
-Country <- (dataset1$Country)
-Continent <- (dataset1$Continent)
-Monarchy <- (dataset1$Monarchy)
-revolts <-dataset1$Revolt
+dataset <- data.table(Data)
+loc <- unique(dataset$Revolt)
+Location <- c(dataset$Revolt)
+Latitude <- c(dataset$Latitude)
+Longitude <- c(dataset$Longitude)
+Synopsis <-c(dataset$Synopsis)
+Start <-c(dataset$`Date/ start`)
+End <-(dataset$`Date/ end`)
+Reasons <-(dataset$Reasons)
+Revolt <- (dataset$Revolt)
+Year <-(dataset$Year)
+Country <- (dataset$Country)
+Continent <- (dataset$Continent)
+Monarchy <- (dataset$Monarchy)
+revolts <-dataset$Revolt
 
 reasons <- c("Anti-colonial", "Anti-seigneurial", "Economic reforms", "Fiscal", "Food", "Freedom", "Labour Conditions", "Natural resources", "Political", "Religion", "Rebel Maroon communities", "Resistance to foreign occupation", "Others", "Multiple")
 actors <- c("Africans",  "Artisans",  "Clergymen", "Enslaved", "Indigenous", "Local elites", "Maroons", "Peasants", "Settlers/Colonists", "Soldiers", "Women", "Workers", "Others",  "Undifferentiated")
@@ -74,13 +74,13 @@ ui<-fluidPage(
                              h4('Filters', actionLink(inputId= 'filters', label = icon("question-sign", lib = "glyphicon"))), 
                              bsTooltip("filters", 
                                        "Use filters to choose and combine several criteria. For example, you can select Spanish Monarchy, Political Reasons and Local Elites and see on the map what events correspond to these choices. You can also narrow or extend the time period on the slider above the map.",  trigger = "hover", options = list(container = "body")),
-                              
+                             
                              bsCollapse(id = "collapse_location", open = "",
                                         bsCollapsePanel("Choose location", style = "danger",
                                                         checkboxGroupInput(
                                                           inputId = "choice",
                                                           label=h4("Monarchy"),
-                                                          choices = c(unique(as.character(dataset1$Monarchy))),
+                                                          choices = c(unique(as.character(dataset$Monarchy))),
                                                           selected = c('Portuguese', 'Spanish')),
                                                         actionButton("select_country","(Un)select All"),
                                                         checkboxGroupInput(
@@ -92,42 +92,49 @@ ui<-fluidPage(
                                         bsCollapsePanel("Choose the Reason", style = "warning",
                                                         actionButton("select_reasons","(Un)select All"),
                                                         checkboxGroupInput(inputId="reasons",label="", 
-                                                                            choices=c(reasons),
-                                                                            selected = c(reasons)))),
+                                                                           choices=c(reasons),
+                                                                           selected = c(reasons)))),
                              
                              bsCollapse(id = "collapse_actors", open = "",
                                         bsCollapsePanel("Choose the Participants", style = "success",
                                                         actionButton("select_actors","(Un)select All"),
                                                         checkboxGroupInput(inputId="actors",label="", 
-                                                                            choices=c(actors),
-                                                                            selected=c(actors))))),                                  
+                                                                           choices=c(actors),
+                                                                           selected=c(actors))))),                                  
                 mainPanel(tags$style(type = "text/css", "#map {height: calc(90vh - 80px) !important;}"),
                           fluidRow(
                             sliderInput(
                               width = '300%',
                               inputId = "range",
                               label= h4("Choose time period"),
-                              min=min(dataset1$Year), max=max(dataset1$Year),
-                              value=c(min(dataset1$Year),max(dataset1$Year)), sep = "")),
+                              min=min(dataset$Year), max=max(dataset$Year),
+                              value=c(min(dataset$Year),max(dataset$Year)), sep = "")),
                           withLoader(leafletOutput("map"), type = 'html', loader = 'loader4'),
                           p(),
                           useShinyalert()
                 )
   ),
   fluidRow(tags$footer(HTML("
-<div class='footer-dark'>
+           <div class='footer-dark'>
             <div class='container'>
                 <div class='row'>
                   <div class='col-6 col-md-4' >
-                        <a href='http://www.resistance.uevora.pt' class='image'><img src='img/resistancelogo_m.png', style='margin-top: -17px; margin-bottom: -13px; padding-right:5px; padding-top:5px; padding-bottom: -30px', height = 40></a>
-                        
+                  <ul>
+                        <li><a href='http://www.resistance.uevora.pt' class='image'><img src='img/resistancelogo_m.png', height = 30></a></li>
+                        <li><a href='https://www.en.cidehus.uevora.pt' class='image'><img src='img/CIDEHUS.png' style = 'padding-top: 10px', height = 40></a></li>
+                        <li><a href='https://www.iscte-iul.pt' class='image'><img src='img/ISCTE-IUL.png', style = 'padding-top: 10px', height = 40></a></li>
+                        <li><a href='https://www.lhlt.mpg.de/en' class='image'><img src='img/mpifullwhite.png', height = 30></a></li>
+                        <li>© 2019. This work is licensed under a CC BY 4.0 license</li>
+
+                    </ul>
                     </div>
                         <div class='col-6 col-md-4'>
                         <ul>
                             <li><a href='http://www.resistance.uevora.pt'>Contacts</a></li>
-                        </ul>
-                    </div>
-                  
+                             <li><a href=''>Legal Information</a></li>
+                              <li><a href=''>Licence</a></li>
+                                </ul>
+                                  </div>
                                   <div class='col-6 col-md-4'>
                                   <h3>Social Media</h3>
                                   <ul>
@@ -136,90 +143,83 @@ ui<-fluidPage(
                                   <li><a href='https://www.youtube.com/c/ProjectoRESISTANCE'>YouTube</a></li>
                                   </ul>
                                   </div>
-                                  
-                                  
-                                  
-                                  <div class='col-6 col-md-4'>
-                                  
-                                  <a href='https://www.lhlt.mpg.de/en' class='image' style='color = white;'><img src='img/mpifullwhite.png', style='color = white; margin-top: -15px; margin-bottom: -5px; padding-right:-5px; padding-top:5px; padding-bottom: -40px', height = 40></a>
-
                                   </div>
                                   </div>
-                                  </div>
-                                  </div>"))))
+                                  </div>")))
+  )
 
 ##ui ends####
 
 server <- function(input, output, session) { 
-
+  
   #########map########
   
- #####set the reactive dataset#####
+  #####set the reactive dataset#####
   dsub <- reactive({
-    ReasonsSearch <- paste0(c('xxx',input$reasons),collapse = "|")
+    ReasonsSearch <- paste0(c(input$reasons),collapse = "|")
     ReasonsSearch <- gsub(",","|",ReasonsSearch)
-    ActorSearch <- paste0(c('xxx',input$actors),collapse = "|")
+    ActorSearch <- paste0(c(input$actors),collapse = "|")
     ActorSearch <- gsub(",","|",ActorSearch)
-    CountrySearch <- paste0(c('xxx',input$choice_country),collapse = "|")
+    CountrySearch <- paste0(c(input$choice_country),collapse = "|")
     CountrySearch <- gsub(",","|",CountrySearch)
-    dataset1[dataset1$Year >= input$range[1] & dataset1$Year <= input$range[2] & grepl(ReasonsSearch,Reasons) & grepl(ActorSearch,Participants) & grepl(CountrySearch,Country) & Monarchy %in% input$choice]
+    dataset[dataset$Year >= input$range[1] & dataset$Year <= input$range[2] & grepl(ReasonsSearch,Reasons) & grepl(ActorSearch,Participants) & grepl(CountrySearch,Country) & Monarchy %in% input$choice]
     
   })
   
   
   ####setting a reactive map####
   observe({
-      output$map <- renderLeaflet({
-        req(icons())
-        leaflet(dsub()) %>% 
-          addProviderTiles(
-            group = 'Light Theme',
-            providers$CartoDB.Positron) %>%
-          addProviderTiles(
-            group = 'Terrain',
-            providers$Esri.WorldImagery) %>%
-          addLayersControl(
-            position = 'topright',
-            baseGroups = c(
-              'Light Theme',
-              'Terrain'
-            )) %>%
-          fitBounds(~min(Longitude), ~min(Latitude), ~max(Longitude), ~max(Latitude)) %>%
-          setView(0, 0, zoom = 2)%>%
-          addAwesomeMarkers(
-            layerId = dsub()$id, lng = ~Longitude, lat = ~Latitude, label = dsub()$Revolt, group = "rebellions",
-            icon = ~IconSet[Monarchy],
-            popup = paste0('<font face="helvetica"',
-                           '<font size="3">', '<strong>', dsub()$Revolt, '</strong>', '</font>',
-                           '<br/>','<strong>', 'Duration: ', '</strong>', dsub()$Duration, 
-        
-                           '<br/>','<strong>', 'Reason: ','</strong>', dsub()$Reasons,
-                           '<br/>','<strong>', 'Participants: ','</strong>', dsub()$Participants,
-                           
-                           '<br/>', dsub()$Synopsis,' ',
-                           '<br/>',
-                           '<br/>',
-                           '</font>',' ',
-                           actionButton("showmodal", "Show more details", 
-                                        onclick = 'Shiny.onInputChange("button_click1",  Math.random())'))
-          ) %>%
-          addSearchFeatures(
-            targetGroups = 'rebellions', # group should match addMarkers() group
-            options = searchFeaturesOptions(
-              zoom=12, openPopup = F, firstTipSubmit = F,
-              autoCollapse = F, hideMarkerOnCollapse = F
-            ))
-        
-        
-      })
+    output$map <- renderLeaflet({
+      req(icons())
+      leaflet(dsub()) %>% 
+        addProviderTiles(
+          group = 'Light Theme',
+          providers$CartoDB.Positron) %>%
+        addProviderTiles(
+          group = 'Terrain',
+          providers$Esri.WorldImagery) %>%
+        addLayersControl(
+          position = 'topright',
+          baseGroups = c(
+            'Light Theme',
+            'Terrain'
+          )) %>%
+        fitBounds(~min(Longitude), ~min(Latitude), ~max(Longitude), ~max(Latitude)) %>%
+        setView(0, 0, zoom = 2)%>%
+        addAwesomeMarkers(
+          layerId = dsub()$id, lng = ~Longitude, lat = ~Latitude, label = dsub()$Revolt, group = "rebellions",
+          icon = ~IconSet[Monarchy],
+          popup = paste0('<font face="helvetica"',
+                         '<font size="3">', '<strong>', dsub()$Revolt, '</strong>', '</font>',
+                         '<br/>','<strong>', 'Duration: ', '</strong>', dsub()$Duration, 
+                         
+                         '<br/>','<strong>', 'Reason: ','</strong>', dsub()$Reasons,
+                         '<br/>','<strong>', 'Participants: ','</strong>', dsub()$Participants,
+                         
+                         '<br/>', dsub()$Synopsis,' ',
+                         '<br/>',
+                         '<br/>',
+                         '</font>',' ',
+                         actionButton("showmodal", "Show more details", 
+                                      onclick = 'Shiny.onInputChange("button_click1",  Math.random())'))
+        ) %>%
+        addSearchFeatures(
+          targetGroups = 'rebellions', # group should match addMarkers() group
+          options = searchFeaturesOptions(
+            zoom=12, openPopup = F, firstTipSubmit = F,
+            autoCollapse = F, hideMarkerOnCollapse = F
+          ))
+      
+      
+    })
   })
   
-
   
   
   
-
-#setting the modal dialogue#
+  
+  
+  #setting the modal dialogue#
   observeEvent( input$button_click1,{
     id <- input$map_marker_click$id
     shinyalert(
@@ -227,41 +227,41 @@ server <- function(input, output, session) {
       size = "l",
       closeOnEsc = TRUE,
       closeOnClickOutside = T,
-      title = paste0(dataset1$Revolt[id]),
+      title = paste0(dataset$Revolt[id]),
       text = tagList(
         fluidPage(style = "overflow-y:scroll; max-height: 500px",
-        fluidRow(style='margin: 10px;',
-                 box(                  
-                   title = htmltools::span(
-                     column(8, class="title-box"),
-                     leaflet() %>%
-                       setView(lng=dataset1$Longitude[id], lat=dataset1$Latitude[id], zoom = 5)%>%
-                       addProviderTiles("CartoDB.Positron", group = "Light Theme", options = providerTileOptions(minZoom = 2, maxZoom = 10)) %>% 
-                       
-                       addMarkers(lng=dataset1$Longitude[id], lat=dataset1$Latitude[id], popup=dataset1$Revolt[id])),
-                   width=12, solidHeader = TRUE, status = "primary",
-                   h3(dataset1$Revolt[id]))),
-        panel(
-          title = "Synopsis", solidHeader = TRUE, status = "danger",
-          renderText(dataset1$Synopsis[id])),
-        h4("Additional info"),
-        panel(
-          div(p(tags$b("Starting date:"), dataset1$`Date/ start`[id], em(".", .noWS = c("before")),
-                tags$b("Ending:"), dataset1$`Date/ end`[id], em(".", .noWS = c("before")), 
-                tags$b("Duration:"), dataset1$Duration[id], em(".", .noWS = c("before")),
-                tags$b("Name in sources:"), dataset1$`Name in sources`[id], em(".", .noWS = c("before")),
-                tags$b("Location:"), dataset1$Location[id], em(".", .noWS = c("before")),
-                tags$b("Country (current):"), dataset1$Country[id], em(".", .noWS = c("before")),
-                tags$b("Monarchy:"), dataset1$Monarchy[id], em(".", .noWS = c("before")),
-                tags$b("Main participants:"), dataset1$Participants[id], em(".", .noWS = c("before")),
-                tags$b("Number of participants:"), dataset1$`Number of participants`[id], em(".", .noWS = c("before")),
-                tags$b("Main reasons & motivations:"), dataset1$Reasons[id], em(".", .noWS = c("before")),
-                tags$b("Leadership:"), dataset1$Leaders[id], em(".", .noWS = c("before"))))),
-        
-        h4("Further reading "),
-        panel(renderText(dataset1$References[id])),
-        panel(div(p(tags$b("Author:"), dataset1$Author[id])))
-      ))
+                  fluidRow(style='margin: 10px;',
+                           box(                  
+                             title = htmltools::span(
+                               column(8, class="title-box"),
+                               leaflet() %>%
+                                 setView(lng=dataset$Longitude[id], lat=dataset$Latitude[id], zoom = 5)%>%
+                                 addProviderTiles("CartoDB.Positron", group = "Light Theme", options = providerTileOptions(minZoom = 2, maxZoom = 10)) %>% 
+                                 
+                                 addMarkers(lng=dataset$Longitude[id], lat=dataset$Latitude[id], popup=dataset$Revolt[id])),
+                             width=12, solidHeader = TRUE, status = "primary",
+                             h3(dataset$Revolt[id]))),
+                  panel(
+                    title = "Synopsis", solidHeader = TRUE, status = "danger",
+                    renderText(dataset$Synopsis[id])),
+                  h4("Additional info"),
+                  panel(
+                    div(p(tags$b("Starting date:"), dataset$`Date/ start`[id], em(".", .noWS = c("before")),
+                          tags$b("Ending:"), dataset$`Date/ end`[id], em(".", .noWS = c("before")), 
+                          tags$b("Duration:"), dataset$Duration[id], em(".", .noWS = c("before")),
+                          tags$b("Name in sources:"), dataset$`Name in sources`[id], em(".", .noWS = c("before")),
+                          tags$b("Location:"), dataset$Location[id], em(".", .noWS = c("before")),
+                          tags$b("Country (current):"), dataset$Country[id], em(".", .noWS = c("before")),
+                          tags$b("Monarchy:"), dataset$Monarchy[id], em(".", .noWS = c("before")),
+                          tags$b("Main participants:"), dataset$Participants[id], em(".", .noWS = c("before")),
+                          tags$b("Number of participants:"), dataset$`Number of participants`[id], em(".", .noWS = c("before")),
+                          tags$b("Main reasons & motivations:"), dataset$Reasons[id], em(".", .noWS = c("before")),
+                          tags$b("Leadership:"), dataset$Leaders[id], em(".", .noWS = c("before"))))),
+                  
+                  h4("Further reading "),
+                  panel(renderText(dataset$References[id])),
+                  panel(div(p(tags$b("Author:"), dataset$Author[id])))
+        ))
       
     )
   })

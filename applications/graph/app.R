@@ -18,21 +18,21 @@ library(readr)
 library(shinycustomloader)
 
 
-dataset1 <- read_delim("data_ency_new_new.csv", 
+dataset <- read_delim("data.csv", 
                        ";", escape_double = FALSE, col_types = cols(Latitude = col_number(), 
                                                                     Longitude = col_number(), Year = col_number()), 
                        trim_ws = TRUE)
 
-df_reasons_all <- read_delim("df_reasons_all_new_new.csv", 
+df_reasons_all <- read_delim("df_reasons.csv", 
                              delim = ";", escape_double = FALSE, col_types = cols(Year = col_number(), 
                                                                                   freq = col_number(), id = col_number()), 
                              trim_ws = TRUE)
 
-df_party_all <- read_delim("df_party_all_new_new.csv", 
+df_party_all <- read_delim("df_party.csv", 
                            delim = ";", escape_double = FALSE, col_types = cols(Year = col_number(), 
                                                                                 freq = col_number()), trim_ws = TRUE)
 
-dataset_graph <- read_delim("data_ency_new_new.csv", 
+dataset_graph <- read_delim("data.csv", 
                             ";", escape_double = FALSE, col_types = cols(Latitude = col_number(), 
                                                                          Longitude = col_number(), Year = col_number()), 
                             trim_ws = TRUE)
@@ -45,28 +45,24 @@ df_reasons_all<-as.data.table(df_reasons_all)
 df_party_all<-as.data.frame(df_party_all)
 df_party_all<-as.data.table(df_party_all)
 
-dataset1 <- data.table(dataset1)
-loc <- unique(dataset1$Revolt)
-Location <- c(dataset1$Revolt)
-Latitude <- c(dataset1$Latitude)
-Longitude <- c(dataset1$Longitude)
-Synopsis <-c(dataset1$Synopsis)
-Start <-c(dataset1$`Date/ start`)
-End <-(dataset1$`Date/ end`)
-Reasons <-(dataset1$Reasons)
-Revolt <- (dataset1$Revolt)
-Year <-(dataset1$Year)
-Country <- (dataset1$Country)
-Continent <- (dataset1$Continent)
-Monarchy <- (dataset1$Monarchy)
-DF <- data.frame(Location,Latitude,Longitude,Start, End, Monarchy,Reasons)
-revolts <-dataset1$Revolt
+dataset <- data.table(dataset)
+Synopsis <-c(dataset$Synopsis)
+Start <-c(dataset$`Date/ start`)
+End <-(dataset$`Date/ end`)
+Reasons <-(dataset$Reasons)
+Revolt <- (dataset$Revolt)
+Year <-(dataset$Year)
+Country <- (dataset$Country)
+Continent <- (dataset$Continent)
+Monarchy <- (dataset$Monarchy)
+
 DFgraph <- data.frame(Year, Revolt, Monarchy, Country,Continent)
 
 
 reasons <- c("Anti-colonial", "Anti-seigneurial", "Economic reforms", "Fiscal", "Food", "Freedom", "Labour Conditions", "Natural resources", "Political", "Religion", "Rebel Maroon communities", "Resistance to foreign occupation", "Others", "Multiple")
 actors <- c("Africans",  "Artisans",  "Clergymen", "Enslaved", "Indigenous", "Local elites", "Maroons", "Peasants", "Settlers/Colonists", "Soldiers", "Women", "Workers", "Others",  "Undifferentiated", 'Muncipal Council / Cabildo')
 countries <-c("Angola", "Argentina", "Belgium",  "Bolivia", "Brazil",  "Cape Verde", "Chile", "Colombia",  "Costa Rica", "Cuba", "Dominican Rep.", "Ecuador", "Guatemala", "Guinea-Bissau", "Italy", "India", "Japan", "Mexico", "Morocco", "Netherlands", "Nicaragua", "Panama", "Paraguay", "Peru", "Philippines", "Portugal", "Puerto Rico", "Spain", "Sri Lanka", "S. Tome&Prin.", "Uruguay","US-NMexico", "US-Louisiana", "Venezuela")
+
 
 ####ui####
 ui<-fluidPage(
@@ -77,63 +73,62 @@ ui<-fluidPage(
                ".shiny-output-error { visibility: hidden; }",
                ".shiny-output-error:before { visibility: hidden; }"),
     useShinyjs(),
-    tags$head(tags$style(HTML("#plot_brushed_points tr.selected {background-color:red}"))),
     sidebarPanel(width = 3,
-      h3("ANALYSING rebellions"),
-      h4("Build your own graphs, tables, and statistics"),
-      p("Download results"),
-      downloadButton('downloadPlot','Download Plot'),
-      actionButton("Download", "Download this table"), 
-      hr(),
-      p("Filters"),
-      fluidRow(
-        column(5,
-               radioButtons("dist", "Visualisation type:",
-                            c("Bubble" = "bubble_graph",
-                              "Bar" = "bar_graph",
-                              "Comparative Tables (reasons)" = "tables_reasons",
-                              "Comparative Tables (participants)" = "tables_party",
-                              "Pie" = "pie_graph"))),
-      column(5,
-               p(strong("Filters by Category")),
-               fluidRow(uiOutput("filters_xyz"))),
-               br()),
-               hr(),
-      fluidRow(
-        
-        bsCollapse(id = "collapse_location", open = "",
-                   bsCollapsePanel("Choose location", style = "danger",
-                                   actionButton("select_monarchy_plot","(Un)select All"),
-                                   checkboxGroupInput(
-                                     inputId = "choice_country",
-                                     label="",
-                                     choices = c(countries),
-                                     selected = c(countries)))),
-        bsCollapse(id = "collapse_reasons", open = "",
-                   bsCollapsePanel("Choose the Reason", style = "warning",
-                                   actionButton("select_reasons_plot","(Un)select All"),
-                                   checkboxGroupInput(inputId="reasons_plot",
-                                                      label="", 
-                                                      choices=c(reasons),
-                                                      selected = c(reasons)))),
-        bsCollapse(id = "collapse_actors", open = "",
-                   bsCollapsePanel("Choose the Participants", style = "success",
-                                   actionButton("select_actors_plot","(Un)select All"),
-                                   checkboxGroupInput(inputId="actors_plot",
-                                                      label="", 
-                                                      choices=c(actors),
-                                                      selected=c(actors))))),
-               
-               br()
-      ),
+                 h3("ANALYSING rebellions"),
+                 h4("Build your own graphs, tables, and statistics"),
+                 p("Download results"),
+                 downloadButton('downloadPlot','Download Plot'),
+                 actionButton("Download", "Download this table"), 
+                 hr(),
+                 p("Filters"),
+                 fluidRow(
+                   column(5,
+                          radioButtons("dist", "Visualisation type:",
+                                       c("Bubble" = "bubble_graph",
+                                         "Bar" = "bar_graph",
+                                         "Comparative Tables (reasons)" = "tables_reasons",
+                                         "Comparative Tables (participants)" = "tables_party",
+                                         "Pie" = "pie_graph"))),
+                   column(5,
+                          p(strong("Filters by Category")),
+                          fluidRow(uiOutput("filters_xyz"))),
+                   br()),
+                 hr(),
+                 fluidRow(
+                   
+                   bsCollapse(id = "collapse_location", open = "",
+                              bsCollapsePanel("Choose location", style = "danger",
+                                              actionButton("select_monarchy_plot","(Un)select All"),
+                                              checkboxGroupInput(
+                                                inputId = "choice_country",
+                                                label="",
+                                                choices = c(countries),
+                                                selected = c(countries)))),
+                   bsCollapse(id = "collapse_reasons", open = "",
+                              bsCollapsePanel("Choose the Reason", style = "warning",
+                                              actionButton("select_reasons_plot","(Un)select All"),
+                                              checkboxGroupInput(inputId="reasons_plot",
+                                                                 label="", 
+                                                                 choices=c(reasons),
+                                                                 selected = c(reasons)))),
+                   bsCollapse(id = "collapse_actors", open = "",
+                              bsCollapsePanel("Choose the Participants", style = "success",
+                                              actionButton("select_actors_plot","(Un)select All"),
+                                              checkboxGroupInput(inputId="actors_plot",
+                                                                 label="", 
+                                                                 choices=c(actors),
+                                                                 selected=c(actors))))),
+                 
+                 br()
+    ),
     # Show the selected plot
     mainPanel(
       chooseSliderSkin("Flat", color = "#cc3429"),
       fluidRow(sliderInput( width = '300%', 
                             inputId = "graph_slider", 
                             label=h4("Choose time period"),
-                            min=min(dataset1$Year), max=max(dataset1$Year),
-                            value=c(min(dataset1$Year),max(dataset1$Year)), sep = "")),
+                            min=min(dataset$Year), max=max(dataset$Year),
+                            value=c(min(dataset$Year),max(dataset$Year)), sep = "")),
       column(12, uiOutput("ui_component", height=600))
       
     )
@@ -143,15 +138,22 @@ ui<-fluidPage(
             <div class='container'>
                 <div class='row'>
                   <div class='col-6 col-md-4' >
-                        <a href='http://www.resistance.uevora.pt' class='image'><img src='img/resistancelogo_m.png', style='margin-top: -17px; margin-bottom: -13px; padding-right:5px; padding-top:5px; padding-bottom: -30px', height = 40></a>
-                        
+                  <ul>
+                        <li><a href='http://www.resistance.uevora.pt' class='image'><img src='img/resistancelogo_m.png', height = 30></a></li>
+                        <li><a href='https://www.en.cidehus.uevora.pt' class='image'><img src='img/CIDEHUS.png' style = 'padding-top: 10px', height = 40></a></li>
+                        <li><a href='https://www.iscte-iul.pt' class='image'><img src='img/ISCTE-IUL.png', style = 'padding-top: 10px', height = 40></a></li>
+                        <li><a href='https://www.lhlt.mpg.de/en' class='image'><img src='img/mpifullwhite.png', height = 30></a></li>
+                        <li>© 2019. This work is licensed under a CC BY 4.0 license</li>
+
+                    </ul>
                     </div>
                         <div class='col-6 col-md-4'>
                         <ul>
                             <li><a href='http://www.resistance.uevora.pt'>Contacts</a></li>
-                        </ul>
-                    </div>
-                  
+                             <li><a href=''>Legal Information</a></li>
+                              <li><a href=''>Licence</a></li>
+                                </ul>
+                                  </div>
                                   <div class='col-6 col-md-4'>
                                   <h3>Social Media</h3>
                                   <ul>
@@ -159,11 +161,6 @@ ui<-fluidPage(
                                   <li><a href='https://twitter.com/R_esiste'>Twitter</a></li>
                                   <li><a href='https://www.youtube.com/c/ProjectoRESISTANCE'>YouTube</a></li>
                                   </ul>
-                                  </div>
-                                  <div class='col-6 col-md-4'>
-                                  
-                                  <a href='https://www.lhlt.mpg.de/en' class='image' style='color = white;'><img src='img/mpifullwhite.png', style='color = white; margin-top: -15px; margin-bottom: -5px; padding-right:-5px; padding-top:5px; padding-bottom: -40px', height = 40></a>
-
                                   </div>
                                   </div>
                                   </div>
@@ -215,24 +212,32 @@ server <- function(input, output, session) {
   
   #######graphics#######
   dsub_graph <- reactive({
-    country_search <- paste0(c('xxx',input$choice_country),collapse = "|")
+    country_search <- paste0(input$choice_country,collapse = "|")
     country_search <- gsub(",","|",country_search)
-    reasons_search <- paste0(c('xxx',input$reasons_plot),collapse = "|")
+    reasons_search <- paste0(input$reasons_plot, collapse = "|")
     reasons_search <- gsub(",","|",reasons_search)
-    actors_search <- paste0(c('xxx',input$actors_plot),collapse = "|")
+    actors_search <- paste0(input$actors_plot, collapse = "|")
     actors_search <- gsub(",","|",actors_search)
-    dataset1[dataset1$Year >= input$graph_slider[1] & dataset1$Year <= input$graph_slider[2] & grepl(country_search,Country) & grepl(reasons_search,Reasons) & grepl(actors_search,Participants )]
+    dataset[dataset$Year >= input$graph_slider[1] & dataset$Year <= input$graph_slider[2] & grepl(country_search,Country) & grepl(reasons_search,Reasons) & grepl(actors_search,Participants )]
     
   })
   
   reasons_graph <- reactive({
-    reasons_search <- paste0(c('xxx',input$reasons_plot),collapse = "|")
+    country_search <- paste0(input$choice_country,collapse = "|")
+    country_search <- gsub(",","|",country_search)
+    reasons_search <- paste0(input$reasons_plot, collapse = "|")
     reasons_search <- gsub(",","|",reasons_search)
+    actors_search <- paste0(input$actors_plot, collapse = "|")
+    actors_search <- gsub(",","|",actors_search)
     df_reasons_all[df_reasons_all$Year >= input$graph_slider[1] & df_reasons_all$Year <= input$graph_slider[2] & grepl(reasons_search,Reasons)]
   })
   
   party_graph <- reactive({
-    actors_search <- paste0(c('xxx',input$actors_plot),collapse = "|")
+    country_search <- paste0(input$choice_country,collapse = "|")
+    country_search <- gsub(",","|",country_search)
+    reasons_search <- paste0(input$reasons_plot, collapse = "|")
+    reasons_search <- gsub(",","|",reasons_search)
+    actors_search <- paste0(input$actors_plot, collapse = "|")
     actors_search <- gsub(",","|",actors_search)
     df_party_all[df_party_all$Year >= input$graph_slider[1] & df_party_all$Year <= input$graph_slider[2] & grepl(actors_search,Participants )]
   })
@@ -310,7 +315,7 @@ server <- function(input, output, session) {
     as.character(input$Y_axis_Category_bubble)
   })
   
-
+  
   #########graph functions#######
   observe({
     if (input$dist == "bubble_graph") {
@@ -319,7 +324,7 @@ server <- function(input, output, session) {
           fluidPage(
             fluidRow(
               plotOutput('plotui', brush=brushOpts("plot_brush",resetOnNew=T)),
-
+              
               column(12,DT::dataTableOutput("plot_brushed_points"))
             )))
       })
@@ -342,7 +347,7 @@ server <- function(input, output, session) {
           fluidPage(
             fluidRow(
               plotOutput('plotui', brush=brushOpts("plot_brush",resetOnNew=T)),
-
+              
               column(12,DT::dataTableOutput("plot_brushed_points"))
             )))
       })
@@ -376,7 +381,7 @@ server <- function(input, output, session) {
           fluidPage(
             fluidRow(
               column(12, plotOutput('plotui', height = 1000, width = 800)),
-
+              
               column(12,DT::dataTableOutput("plot_brushed_points"))
             )))
       })
@@ -400,7 +405,7 @@ server <- function(input, output, session) {
           fluidPage(
             fluidRow(
               column(12, plotOutput('plotui', brush=brushOpts("plot_brush",resetOnNew=T), height = 1000, width = 800)),
-
+              
               column(12,DT::dataTableOutput("plot_brushed_points"))
             )))
       })
@@ -418,7 +423,7 @@ server <- function(input, output, session) {
                              dom = 'Bfrtip'))
       }, filter = 'top')
     }
-
+    
   })
   
   
@@ -591,7 +596,7 @@ server <- function(input, output, session) {
   y_var_party<-reactive({
     as.character(input$Y_axis_Category_tables_party)
   })
-#######end xyz########
+  #######end xyz########
   
   
   

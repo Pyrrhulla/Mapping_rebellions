@@ -13,7 +13,7 @@ ui<-fluidPage(
       bsCollapse(id = "authors", 
                  bsCollapsePanel("Ana María Sixto Barcia (USC)", 
                                  p("Comuneros revolt 1520-1522"),
-                                 style = "warning"),
+                                 style = "default"),
                  bsCollapsePanel("Ana Paula Medicci (UFBA)", 
                                  p("Minas backcountry riots 1736"),
                                  style = "default"),
@@ -22,7 +22,7 @@ ui<-fluidPage(
                                  p("Tehuecos rebellion 1597"),
                                  p("Stamped paper riot 1661"),
                                  p("Porto uprising 1757"),
-                                 style = "warning"),
+                                 style = "default"),
                  bsCollapsePanel("André Godinho (NOVA FCSH)", 
                                  p("Succession crisis riots in Coimbra 1580"),
                                  p("Succession crisis riots in Lisbon 1580"),
@@ -32,20 +32,20 @@ ui<-fluidPage(
                  bsCollapsePanel("Andreia Fidalgo (ISCTE-IUL)", 
                                  p("Anti-French revolts in Algarve 1808"),
                                  p("Guerrilla of Remexido 1833-1838"),
-                                 style = "warning"),
+                                 style = "default"),
                  bsCollapsePanel("Ângela Barreto Xavier (ICS-UL)", 
                                  p("Cuncolim revolt 1583"),
                                  style = "default"),
                  bsCollapsePanel("Arlindo Caldeira (NOVA FCSH)", 
                                  p("Rebellion of Amador 1595"),
-                                 style = "warning"),
+                                 style = "default"),
                  bsCollapsePanel("Arthur Curvelo (ICS-UL)", 
                                  p("Palmares resistance 1602-1694"),
                                  p("Mascate war 1710"),
                                  style = "default"),
                  bsCollapsePanel("Benita Herreros (UC)", 
                                  p("Huarochiri uprising 1750"),
-                                 style = "warning"),
+                                 style = "default"),
                  bsCollapsePanel("Blanca Llanes Parra (UC)", 
                                  p("Oropesa riot in Madrid 1699"),
                                  style = "default"),
@@ -54,7 +54,7 @@ ui<-fluidPage(
                                  p("Tarahumara rebellions 1646-1697"),
                                  p("Tehuantepec rebellion 1660-1661"),
                                  p("Galicia uprising 1846"),
-                                 style = "warning"),
+                                 style = "default"),
                  bsCollapsePanel("Candela De Luca (UNLP)", 
                                  p("Sucre riots 1769"),
                                  p("Ingaguasi riot 1775"),
@@ -66,7 +66,7 @@ ui<-fluidPage(
                                  p("Acaxee rebellion 1591-1604"),
                                  p("Guachichiles rebellion 1599"),
                                  p("Mapuche rebellion 1723"),
-                                 style = "warning"),
+                                 style = "default"),
                  bsCollapsePanel("David A. Abián Cubillo (UC)", 
                                  p("Aranjuez riot 1808"),
                                  p("Agraviados revolt 1827"),
@@ -104,7 +104,7 @@ ui<-fluidPage(
                                  p("Yaqui rebellion 1740"),
                                  p("Yaqui rebellion 1741"),
                                  p("Yoremes rebellion 1769"),
-                                 style = "warning"),
+                                 style = "default"),
                  bsCollapsePanel("Eloy González Trueba (UC)", 
                                  p("Beeldenstorm (Iconoclastic Fury) 1566"),
                                  p("Watergeuzen revolt 1572"),
@@ -115,7 +115,7 @@ ui<-fluidPage(
                  bsCollapsePanel("Elvira López (PUC)", 
                                  p("Huilliche uprising 1712"),
                                  p("Tax revolt in Santiago de Chile 1776"),
-                                 style = "warning"),
+                                 style = "default"),
                  bsCollapsePanel("Emir Reitano (UNLP)", 
                                  p("Alzaga conspiracy 1809"),
                                  p("Chuquisaca rebellion 1809"),
@@ -131,7 +131,7 @@ ui<-fluidPage(
                                  p("Indigenous uprising in Bahia 1555"),
                                  p("Reritiba revolt 1742"),
                                  p("Guarani war 1754-1756"),
-                                 style = "warning"),
+                                 style = "default"),
                  bsCollapsePanel("Fernanda Olival (UEvora)", 
                                  p("Manuelinho revolt 1637"),
                                  style = "default"),
@@ -140,7 +140,7 @@ ui<-fluidPage(
                                  p("Pueblo revolt 1680"),
                                  p("Rebellion of Jacinto Canek 1761"),
                                  p("Tutotepec rebellion 1766-1769"),
-                                 style = "warning"),
+                                 style = "default"),
                  bsCollapsePanel("Filomena Barros (UEvora)", 
                                  p("Morisco rebellion of La Muela de Cortes 1609"),
                                  p("Morisco rebellion of Laguar 1609"),
@@ -157,7 +157,7 @@ ui<-fluidPage(
                                  p("Seven Nations rebellion 1644"),
                                  p("Third Calchaqui War 1658-1667"),
                                  p("Uprising of coca growers in La Paz 1644"),
-                                 style = "warning"),
+                                 style = "default"),
                  bsCollapsePanel("Ivan Gracia-Arnau (UBarcelona & UEvora)", 
                                  p("Germanias revolt 1519-1523"),
                                  p("Germanias revolt (Mallorca) 1521-1523"),
@@ -187,7 +187,7 @@ ui<-fluidPage(
                                  p("Julangue uprising 1708"),
                                  p("Sal Island uprising 1847"),
                                  p("Papel revolt in Bissau 1844"),
-                                 style = "warning"),
+                                 style = "default"),
                  bsCollapsePanel("Jacqueline Sarmiento (UNLP)", 
                                  p("First Calchaqui war 1560-1563"),
                                  p("Maya rebellion of Mani and Sotuta 1562"),
@@ -202,13 +202,10 @@ ui<-fluidPage(
                                  p("Chiriguano resistance 1560-1660"),
                                  p("Curalaba uprising 1598"),
                                  p("Tupac Amaru rebellion 1780-1783"),
-                                 style = "warning"),
+                                 style = "default"),
                  bsCollapsePanel("Joana Fraga (ICS-UL)", 
                                  p("Acclamation of Amador Bueno 1641"),
                                  style = "default"),
-                 bsCollapsePanel("Fernanda Olival (UEvora)", 
-                                 p("Manuelinho revolt 1637"),
-                                 style = "warning"),
                  bsCollapsePanel("José Luis Egío García (MPIeR)", 
                                  p("Mexico city revolt 1624"),
                                  p("Maya rebellion of Tekax 1610"),
@@ -216,7 +213,7 @@ ui<-fluidPage(
                                  style = "default"),
                  bsCollapsePanel("José Miguel Moura Ferreira (ICS-UL)", 
                                  p("Madoba Dessai rebellion 1765-1767"),
-                                 style = "warning"),
+                                 style = "default"),
                  bsCollapsePanel("José Silva Évora (UNICV)", 
                                  p("Cacheu uprising 1684"),
                                  p("Caipira battalion mutiny 1835"),
@@ -230,7 +227,7 @@ ui<-fluidPage(
                                  p("Arcozelo uprising 1635"),
                                  p("Colombo military mutiny 1652"),
                                  p("Bahian conspiracy 1798"),
-                                 style = "warning"),
+                                 style = "default"),
                  bsCollapsePanel("Juan Bubello (UNLP)", 
                                  p("Calabrian rebellion 1599"),
                                  p("Juan Hilario insurrection 1801"),
@@ -243,13 +240,16 @@ ui<-fluidPage(
                                  p("Comuneros of Merida insurrection 1781"),
                                  p("Comuneros of Paraguay insurrection (II) 1732-1735"),
                                  p("Indigenous malon to Lujan 1780"),
-                                 style = "warning"),
+                                 style = "default"),
+                 bsCollapsePanel("Juliana Gazzinelli de Oliveira (ISCTE-IUL)", 
+                                 p("Enslaved uprising of Engenho de Santana 1789"),
+                                 style = "default"),
                  bsCollapsePanel("Kevin Carreira Soares (ICS)", 
                                  p("Shimabara rebellion 1637-1638"),
                                  style = "default"),
                  bsCollapsePanel("Lígia Bellini (UFBA)", 
                                  p("Santidade de Jaguaripe resistance 1580-1585"),
-                                 style = "warning"),
+                                 style = "default"),
                  bsCollapsePanel("Lucía Uncal (UNLP)", 
                                  p("Enslaved uprising 1617"),
                                  p("Lacandon rebellion 1553-1556"),
@@ -262,7 +262,7 @@ ui<-fluidPage(
                                  p("Huanuco rebellion 1812"),
                                  p("Cuzco rebellion 1814"),
                                  p("Rebellion of the alcabalas 1592"),
-                                 style = "warning"),
+                                 style = "default"),
                  bsCollapsePanel("Luis Nicolau Parés (UFBA)", 
                                  p("Malê revolt 1835"),
                                  style = "default"),
@@ -299,7 +299,7 @@ ui<-fluidPage(
                                  p("Vila Real riot 1636"),
                                  p("Vila Viçosa riots 1637"),
                                  p("Tangiers riot 1595"),
-                                 style = "warning"),
+                                 style = "default"),
                  bsCollapsePanel("Margarita Serna Vallejo (UC)", 
                                  p("Anti-French riot in Zaragoza 1705"),
                                  p("Anti-Walloons riot 1643"),
@@ -311,7 +311,7 @@ ui<-fluidPage(
                                  p("Fishermen riots in Ovar 1737"),
                                  p("Food riots in Porto 1836"),
                                  p("Peasant riots in Coimbra 1723"),
-                                 style = "warning"),
+                                 style = "default"),
                  bsCollapsePanel("Mariana Meneses Muñoz (NOVA FCSH)", 
                                  p("Mongui rebellion 1753"),
                                  p("Mutiny aboard the Leona galley 1583"),
@@ -321,7 +321,7 @@ ui<-fluidPage(
                                  p("Granja de San Ildefonso insurrection 1836"),
                                  p("Riego military rebellion 1820"),
                                  p("Sargadelos riot 1798"),
-                                 style = "warning"),
+                                 style = "default"),
                  
                  bsCollapsePanel("Marina Torres Arce (UC)", 
                                  p("Palermo riots 1560"),
@@ -331,14 +331,14 @@ ui<-fluidPage(
                  bsCollapsePanel("Miguel Dantas da Cruz (ICS-UL)", 
                                  p("Conspiracy of Gomes Freire 1817"),
                                  p("Our Father revolt 1666"),
-                                 style = "warning"),
+                                 style = "default"),
                  
                  bsCollapsePanel("Mónica Fernández Armesto (USC)", 
                                  p("Revolt of Aragon 1591"),
                                  style = "default"),
                  bsCollapsePanel("Moreno Pacheco (UFBA)", 
                                  p("Potiguara war 1574-1599"),
-                                 style = "warning"),
+                                 style = "default"),
                  
                  bsCollapsePanel("Ofélia Rey Castelao (USC)", 
                                  p("Moorish rebellion of Alpujarras 1568"),
@@ -357,7 +357,7 @@ ui<-fluidPage(
                                  p("Taironas rebellions 1536-1541 "),
                                  p("Talamanca uprising 1615-1619"),
                                  p("Talamanca uprising 1709"),
-                                 style = "warning"),
+                                 style = "default"),
                  
                  bsCollapsePanel("Pablo Sánchez León (NOVA FCSH)", 
                                  p("Anti-liberal violence in Madrid 1825"),
@@ -369,7 +369,7 @@ ui<-fluidPage(
                                  p("Expulsion of Jesuits 1640"),
                                  p("Revolt of Vila Rica 1720"),
                                  p("Tiradentes conspiracy 1788"),
-                                 style = "warning"),
+                                 style = "default"),
                  
                  bsCollapsePanel("Rubén Castro Redondo (UC)", 
                                  p("Messina riots 1672"),
@@ -383,7 +383,7 @@ ui<-fluidPage(
                                  p("Indigenous malon of 1740"),
                                  p("Indigenous malon to Bahia Blanca 1837"),
                                  p("Siege of Rio Cuarto 1831"),
-                                 style = "warning"),
+                                 style = "default"),
                  
                  bsCollapsePanel("Sarita Mota (ISCTE-IUL)", 
                                  p("Cachaça revolt 1660"),
@@ -395,34 +395,33 @@ ui<-fluidPage(
                                  p("Indigenous siege to Buenos Aires 1536"),
                                  p("Mamil Mapu raiders 1750"),
                                  p("Taino rebellion 1511"),
-                                 style = "warning"),
+                                 style = "default"),
                  bsCollapsePanel("Tomás A. Mantecón (UC)", 
                                  p("Comuneros of Socorro insurrection 1781"),
-                                 style = "default"),
-      bsCollapsePanel("Juliana Gazzinelli de Oliveira (ISCTE-IUL)", 
-                      p("Enslaved uprising of Engenho de Santana 1789"),
-                      style = "warning")),
-      br(),
-      h3("Development"),
-      bsCollapsePanel("Alexandra Anokhina (MPI LHLT)", 
-                      p("Programming, deisign and deployment of the web-site and applications"),
-                      style = "default"))),
+                                 style = "default")))),
   br(),
   br(),
   fluidRow(tags$footer(HTML("
-<div class='footer-dark'>
+           <div class='footer-dark'>
             <div class='container'>
                 <div class='row'>
                   <div class='col-6 col-md-4' >
-                        <a href='http://www.resistance.uevora.pt' class='image'><img src='img/resistancelogo_m.png', style='margin-top: -17px; margin-bottom: -13px; padding-right:5px; padding-top:5px; padding-bottom: -30px', height = 40></a>
-                        
+                  <ul>
+                        <li><a href='http://www.resistance.uevora.pt' class='image'><img src='img/resistancelogo_m.png', height = 30></a></li>
+                        <li><a href='https://www.en.cidehus.uevora.pt' class='image'><img src='img/CIDEHUS.png' style = 'padding-top: 10px', height = 40></a></li>
+                        <li><a href='https://www.iscte-iul.pt' class='image'><img src='img/ISCTE-IUL.png', style = 'padding-top: 10px', height = 40></a></li>
+                        <li><a href='https://www.lhlt.mpg.de/en' class='image'><img src='img/mpifullwhite.png', height = 30></a></li>
+                        <li>© 2019. This work is licensed under a CC BY 4.0 license</li>
+
+                    </ul>
                     </div>
                         <div class='col-6 col-md-4'>
                         <ul>
                             <li><a href='http://www.resistance.uevora.pt'>Contacts</a></li>
-                        </ul>
-                    </div>
-                  
+                             <li><a href=''>Legal Information</a></li>
+                              <li><a href=''>Licence</a></li>
+                                </ul>
+                                  </div>
                                   <div class='col-6 col-md-4'>
                                   <h3>Social Media</h3>
                                   <ul>
@@ -431,12 +430,9 @@ ui<-fluidPage(
                                   <li><a href='https://www.youtube.com/c/ProjectoRESISTANCE'>YouTube</a></li>
                                   </ul>
                                   </div>
-                                  <div class='col-6 col-md-4'>
-                                  <a href='https://www.lhlt.mpg.de/en' class='image' style='color = white;'><img src='img/mpifullwhite.png', style='color = white; margin-top: -15px; margin-bottom: -5px; padding-right:-5px; padding-top:5px; padding-bottom: -40px', height = 40></a>
                                   </div>
                                   </div>
-                                  </div>
-                                  </div>"))))      
+                                  </div>"))))    
 
 
 server <- function(input, output, session) { 
