@@ -14,8 +14,8 @@ library(shinyWidgets)
 
 #data load
 Data <- read_delim("data.csv", delim = ";", 
-                   escape_double = FALSE, col_types = cols(Year = col_character()), 
-                   trim_ws = TRUE)
+                   escape_double = FALSE, col_types = cols(`Date/ start` = col_character(), 
+                                                           Year = col_character()), trim_ws = TRUE)
 
 #additional year setting
 Data$Year<- gsub('.{6}$', '', Data$Year)
